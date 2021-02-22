@@ -55,3 +55,8 @@ Only time will tell...
 - [ ] Undo Turn button.
 - [ ] Reset button.
 - [ ] Infinite Time Option.
+
+
+# Reminder for next time:
+- Change Main Menu to work with buttons!!! Cavas layer. Watch https://www.youtube.com/watch?v=WaotOuDNio8&ab_channel=RafaFiedo
+- Pause Menu and Main Menu will need refactoring
