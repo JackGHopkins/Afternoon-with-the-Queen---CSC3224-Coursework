@@ -26,30 +26,30 @@ Only time will tell...
 
 ## Game Design (10 Marks)
 **Possible Interaction** - If Player can influence the enviroment (3 Marks):
-- [ ] Place Tokens
+- [X] Place Tokens
 - [ ] AI / Queen reacts to placement of Token.
 - [ ] The Speed at which the Queen places the Token varies
 
 **Genre Clarity** - If its clear what the Player has to do after a little experimenting (3 Marks):
-- [ ] Make it clear its a game of Noughts and Crosses.
+- [X] Make it clear its a game of Noughts and Crosses.
 
 **Goals** - What the Player can achieve (2 marks):
-- [ ] Player can win the Game
+- [X] Player can win the Game
 
 **Ease of Play** - How intuative is it to play? (2 marks):
-- [ ] Make Graphics clear.
+- [X] Make Graphics clear.
 
 ## Technical Design (10 Marks)
 **Control Management** - Player can impact enviroment as expected (3 Marks):
-- [ ] Placing Token in correct places.
+- [X] Placing Token in correct places.
 - [ ] No dead spaces on Buttons.
 
 **Event Handling** - Enviroment reacto to player's interactions as expected (3 Marks):
-- [ ] Result of the Game is called correctly.
+- [X] Result of the Game is called correctly.
 
 **Enviroment Automation** Game plays even without player doing anything (4 Marks):
 - [ ] Implement Time limit for each opponent (Like that of Chess).
-- [ ] Faster you place Token the more time you get.
+- [ ] Faster you place Token the more time is returned to you.
 
 ## Developer's Tools (5 Marks)
 - [ ] Undo Turn button.
