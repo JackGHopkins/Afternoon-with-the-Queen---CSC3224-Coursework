@@ -16,8 +16,12 @@ _global_script_class_icons={
 [application]
 
 config/name="CSC3224"
-run/main_scene="res://Assets/Scenes/Noughts&Crosses.tscn"
+run/main_scene="res://Assets/Scenes/TitleScreen.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+PauseMenu="*res://Assets/Scenes/PauseMenu.tscn"
 
 [display]
 
