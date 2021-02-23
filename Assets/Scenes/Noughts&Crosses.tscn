@@ -1,11 +1,19 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Assets/Script/NoughtsCrosses.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Script/TokenButton.cs" type="Script" id=2]
 [ext_resource path="res://Assets/Sprites/Queen.png" type="Texture" id=3]
 [ext_resource path="res://Assets/Sprites/Grid3x3.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Script/PauseOverlay.cs" type="Script" id=5]
+[ext_resource path="res://Assets/Fonts/Minecraftia-Regular.ttf" type="DynamicFontData" id=6]
+[ext_resource path="res://Assets/Fonts/Minecraftia.tres" type="DynamicFont" id=7]
+[ext_resource path="res://Assets/Script/PauseMenu.cs" type="Script" id=8]
 
-[node name="Node2D" type="Node2D"]
+[sub_resource type="DynamicFont" id=1]
+size = 8
+font_data = ExtResource( 6 )
+
+[node name="Node2D" type="Node"]
 
 [node name="Grid3x3" type="Sprite" parent="."]
 position = Vector2( 224, 120 )
@@ -158,10 +166,158 @@ __meta__ = {
 row = 2
 col = 2
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Queen" type="Sprite" parent="."]
 position = Vector2( 72, 112 )
 z_index = 5
 texture = ExtResource( 3 )
+
+[node name="PauseLayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="Pause" type="Control" parent="PauseLayer"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BlackOverlay" type="ColorRect" parent="PauseLayer/Pause"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.709804 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="PauseLayer/Pause/BlackOverlay"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+Paths = PoolStringArray( "PauseScreen/VBoxContainer/Resume/VBoxContainer/CenterContainer/HBoxContainer/Hover", "PauseScreen/VBoxContainer/Restart/VBoxContainer/CenterContainer/HBoxContainer", "PauseScreen/VBoxContainer/Exit/VBoxContainer/CenterContainer/HBoxContainer/Hover" )
+
+[node name="PauseScreen" type="CenterContainer" parent="PauseLayer/Pause/BlackOverlay/MarginContainer"]
+margin_right = 320.0
+margin_bottom = 240.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseLayer/Pause/BlackOverlay/MarginContainer/PauseScreen"]
+margin_left = 122.0
+margin_top = 86.0
+margin_right = 198.0
+margin_bottom = 153.0
+
+[node name="PauseTitle" type="CenterContainer" parent="PauseLayer/Pause/BlackOverlay/MarginContainer/PauseScreen/VBoxContainer"]
+margin_right = 76.0
+margin_bottom = 22.0
+
+[node name="TitleText" type="Label" parent="PauseLayer/Pause/BlackOverlay/MarginContainer/PauseScreen/VBoxContainer/PauseTitle"]
+margin_right = 76.0
+margin_bottom = 22.0
+custom_fonts/font = ExtResource( 7 )
+text = "Paused."
+
+[node name="Resume" type="CenterContainer" parent="PauseLayer/Pause/BlackOverlay/MarginContainer/PauseScreen/VBoxContainer"]
+margin_top = 26.0
+margin_right = 76.0
+margin_bottom = 37.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseLayer/Pause/BlackOverlay/MarginContainer/PauseScreen/VBoxContainer/Resume"]
+margin_left = 13.0
+margin_right = 62.0
+margin_bottom = 11.0
+
+[node name="CenterContainer" type="CenterContainer" parent="PauseLayer/Pause/BlackOverlay/MarginContainer/PauseScreen/VBoxContainer/Resume/VBoxContainer"]
+margin_right = 49.0
+margin_bottom = 11.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PauseLayer/Pause/BlackOverlay/MarginContainer/PauseScreen/VBoxContainer/Resume/VBoxContainer/CenterContainer"]
+margin_right = 49.0
+margin_bottom = 11.0
+
+[node name="Hover" type="Label" parent="PauseLayer/Pause/BlackOverlay/MarginContainer/PauseScreen/VBoxContainer/Resume/VBoxContainer/CenterContainer/HBoxContainer"]
+margin_right = 7.0
+margin_bottom = 11.0
+rect_min_size = Vector2( 7, 0 )
+custom_fonts/font = SubResource( 1 )
+text = ">"
+
+[node name="Play" type="Label" parent="PauseLayer/Pause/BlackOverlay/MarginContainer/PauseScreen/VBoxContainer/Resume/VBoxContainer/CenterContainer/HBoxContainer"]
+margin_left = 11.0
+margin_right = 49.0
+margin_bottom = 11.0
+rect_min_size = Vector2( 38, 0 )
+custom_fonts/font = SubResource( 1 )
+text = "Resume"
+
+[node name="Restart" type="CenterContainer" parent="PauseLayer/Pause/BlackOverlay/MarginContainer/PauseScreen/VBoxContainer"]
+margin_top = 41.0
+margin_right = 76.0
+margin_bottom = 52.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseLayer/Pause/BlackOverlay/MarginContainer/PauseScreen/VBoxContainer/Restart"]
+margin_left = 13.0
+margin_right = 62.0
+margin_bottom = 11.0
+
+[node name="CenterContainer" type="CenterContainer" parent="PauseLayer/Pause/BlackOverlay/MarginContainer/PauseScreen/VBoxContainer/Restart/VBoxContainer"]
+margin_right = 49.0
+margin_bottom = 11.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PauseLayer/Pause/BlackOverlay/MarginContainer/PauseScreen/VBoxContainer/Restart/VBoxContainer/CenterContainer"]
+margin_right = 49.0
+margin_bottom = 11.0
+
+[node name="Hover" type="Label" parent="PauseLayer/Pause/BlackOverlay/MarginContainer/PauseScreen/VBoxContainer/Restart/VBoxContainer/CenterContainer/HBoxContainer"]
+margin_right = 7.0
+margin_bottom = 11.0
+rect_min_size = Vector2( 7, 0 )
+custom_fonts/font = SubResource( 1 )
+text = ">"
+
+[node name="Restart" type="Label" parent="PauseLayer/Pause/BlackOverlay/MarginContainer/PauseScreen/VBoxContainer/Restart/VBoxContainer/CenterContainer/HBoxContainer"]
+margin_left = 11.0
+margin_right = 49.0
+margin_bottom = 11.0
+rect_min_size = Vector2( 38, 0 )
+custom_fonts/font = SubResource( 1 )
+text = "Restart"
+
+[node name="Exit" type="CenterContainer" parent="PauseLayer/Pause/BlackOverlay/MarginContainer/PauseScreen/VBoxContainer"]
+margin_top = 56.0
+margin_right = 76.0
+margin_bottom = 67.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseLayer/Pause/BlackOverlay/MarginContainer/PauseScreen/VBoxContainer/Exit"]
+margin_left = 13.0
+margin_right = 62.0
+margin_bottom = 11.0
+
+[node name="CenterContainer" type="CenterContainer" parent="PauseLayer/Pause/BlackOverlay/MarginContainer/PauseScreen/VBoxContainer/Exit/VBoxContainer"]
+margin_right = 49.0
+margin_bottom = 11.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PauseLayer/Pause/BlackOverlay/MarginContainer/PauseScreen/VBoxContainer/Exit/VBoxContainer/CenterContainer"]
+margin_right = 49.0
+margin_bottom = 11.0
+
+[node name="Hover" type="Label" parent="PauseLayer/Pause/BlackOverlay/MarginContainer/PauseScreen/VBoxContainer/Exit/VBoxContainer/CenterContainer/HBoxContainer"]
+margin_right = 7.0
+margin_bottom = 11.0
+rect_min_size = Vector2( 7, 0 )
+custom_fonts/font = SubResource( 1 )
+text = ">"
+
+[node name="Exit" type="Label" parent="PauseLayer/Pause/BlackOverlay/MarginContainer/PauseScreen/VBoxContainer/Exit/VBoxContainer/CenterContainer/HBoxContainer"]
+margin_left = 11.0
+margin_right = 49.0
+margin_bottom = 11.0
+rect_min_size = Vector2( 38, 0 )
+custom_fonts/font = SubResource( 1 )
+text = "Exit"
 [connection signal="pressed" from="Grid3x3/Square0,0" to="Grid3x3/Square0,0" method="_on_Square_pressed"]
 [connection signal="pressed" from="Grid3x3/Square0,1" to="Grid3x3/Square0,1" method="_on_Square_pressed"]
 [connection signal="pressed" from="Grid3x3/Square0,2" to="Grid3x3/Square0,2" method="_on_Square_pressed"]

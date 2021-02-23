@@ -6,16 +6,17 @@ public class Menu : MarginContainer
     Label hoverOne;
     Label hoverTwo;
 
-    private int currentHover;
-    private const int noMenuOptions = 1;
+    protected int currentHover { get; set; }
+    protected int noMenuOptions { get; set; }
 
-    [Export] bool PauseOn = false;
-    [Export] String[] Paths = new string[noMenuOptions + 1];
-    Label[] Nodes = new Label[noMenuOptions + 1];
+    protected Label[] Nodes { get; set; }
 
-    // Called when the node enters the scene tree for the first time.
-    public override void _Ready()
+    
+
+    public void MenuReady(string[] Paths)
     {
+        noMenuOptions = Paths.Length - 1;
+        Nodes = new Label[noMenuOptions + 1];
         for (int i = 0; i < Paths.GetLength(0); i++)
         {
             Nodes[i] = GetNode<Label>(Paths[i].ToString());
@@ -24,8 +25,7 @@ public class Menu : MarginContainer
         SetCurrentHover();
     }
 
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(float delta)
+    public void MenuProcess()
     {
         if (Input.IsActionJustPressed("ui_down") && currentHover < noMenuOptions)
         {
@@ -51,10 +51,6 @@ public class Menu : MarginContainer
         {
             HoverAccepted();
         }
-
-        else if(Input.IsActionJustPressed("ui_cancel") && PauseOn == true){
-            GetTree().Paused = !GetTree().Paused;
-        }
     }
 
     public void SetCurrentHover()
@@ -70,15 +66,6 @@ public class Menu : MarginContainer
         }
     }
 
-    public void HoverAccepted()
-    {
-        if (currentHover == 0)
-        {
-            GetTree().ChangeScene("res://Assets/Scenes/Noughts&Crosses.tscn");
-        }
-        else if (currentHover == Nodes.GetLength(0) - 1)
-        {
-            GetTree().Quit();
-        }
-    }
+    // Virtual Function
+    public virtual void HoverAccepted(){}
 }

@@ -5,14 +5,16 @@ public class Token
 {
     public const int Null = 0;
     public const int Cross = 1;
-    public const int Nought = 2;
+    public const int Nought = 10;
 }
 
 public class NoughtsCrosses : Node
 {
-    TextureButton[,] board = new TextureButton[3, 3];
+    TokenButton[,] board = new TokenButton[3, 3];
 
+    private int currentPlayer = Token.Cross;
     private int turnCount = 0;
+
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -21,31 +23,21 @@ public class NoughtsCrosses : Node
         {
             for (int j = 0; j < board.GetLength(1); j++)
             {
-                var button = GetNode<TextureButton>("Square" + i.ToString() + "," + j.ToString());
-                board[i,j] = button;
+                var button = GetNode<TokenButton>("Square" + i.ToString() + "," + j.ToString());
+                board[i, j] = button;
                 GD.Print(button.ToString());
-                board[i,j].Connect( "CustomSignal", this, "OnTokenPressed");
+                board[i, j].Connect("CustomSignal", this, "OnTokenPressed");
             }
         }
     }
 
-    public void OnTokenPressed(TextureButton button)
+    // Fires signal
+    public void OnTokenPressed(TokenButton button)
     {
-        GD.Print("TokenPressed");
+        GD.Print("TokenPressed: " + button.GetX() + button.GetY() );
+        
+        AddToken(button.GetX(), button.GetY(), currentPlayer);
     }
-
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(float delta)
-    {
-        for (int i = 0; i < board.GetLength(0); i++)
-        {
-            for (int j = 0; j < board.GetLength(1); j++)
-            {
-
-            }
-        }
-    }
-
 
     public void ClearBoard()
     {
@@ -59,79 +51,114 @@ public class NoughtsCrosses : Node
         }
     }
 
-    public int GetTurnCount() { return turnCount; }
-    public void SetTurnCount() { turnCount = turnCount + 1; }
+    public void AddToken(int x, int y, int token)
+    {
+        if (board[x, y].GetValue() == 0)
+        {
+            board[x, y].SetValue(token);
+            turnCount++;
+            CheckWin(x, y, token);
 
-    // public void AddToken(int x, int y, int token)
-    // {
-    //     if (board[x, y] == 0) {
-    //         board[x, y] = token;
-    //         turnCount++;
-    //         CheckWin(x, y, token);
-    //     }
-    // }
+            if (currentPlayer != Token.Cross && currentPlayer != Token.Nought)
+            {
+                GD.Print("currentPlayer not Cross or Nought: " + currentPlayer);
+            }
 
-    // public void CheckWin(int x, int y, int token)
-    // {
-    //     // Checking Column.
-    //     for (int i = 0; i < board.GetLength(1); i++)
-    //     {
-    //         if (board[x,i] != token)
-    //             break;
-    //         if (i == board.GetLength(1) - 1)
-    //         {
-    //             //report win for s
-    //         }
-    //     }
+            if (currentPlayer == Token.Cross)
+            {
+                board[x, y].SetCross();
+                currentPlayer = Token.Nought;
+            }
+            else
+            {
+                board[x, y].SetNought();
+                currentPlayer = Token.Cross;
+            }
+        }
+    }
 
-    //     // Checking Row.
-    //     for (int i = 0; i < board.GetLength(0); i++)
-    //     {
-    //         if (board[i, y] != token)
-    //             break;
-    //         if (i == board.GetLength(0) - 1)
-    //         {
-    //             //report win for s
-    //         }
-    //     }
+    public void CheckWin(int x, int y, int token)
+    {
+        // Checking Column.
+        for (int i = 0; i < board.GetLength(1); i++)
+        {
+            if (board[x, i].GetValue() != token)
+                break;
+            if (i == board.GetLength(1) - 1)
+            {
+                PrintWinner();
+            }
+        }
 
-    //     // Checking Diagonal.
-    //     if (x == y)
-    //     {
-    //         for (int i = 0; i < board.GetLength(0); i++)
-    //         {
-    //             if (board[i, i] != token)
-    //                 break;
-    //             if (i == board.GetLength(0) - 1)
-    //             {
-    //                 //report win for s
-    //             }
-    //         }
-    //     }
+        // Checking Row.
+        for (int i = 0; i < board.GetLength(0); i++)
+        {
+            if (board[i, y].GetValue() != token)
+                break;
+            if (i == board.GetLength(0) - 1)
+            {
+                PrintWinner();
+            }
+        }
 
-    //     // Checking Anti-Diagonal.
-    //     if (x + y == board.GetLength(0) - 1)
-    //     {
-    //         for (int i = 0; i < board.GetLength(0); i++)
-    //         {
-    //             if (board[i, (board.GetLength(0) - 1) - i] != token)
-    //                 break;
-    //             if (i == board.GetLength(0) - 1)
-    //             {
-    //                 //report win for s
-    //             }
-    //         }
-    //     }
+        // Checking Diagonal.
+        if (x == y)
+        {
+            for (int i = 0; i < board.GetLength(0); i++)
+            {
+                if (board[i, i].GetValue() != token)
+                    break;
+                if (i == board.GetLength(0) - 1)
+                {
+                    PrintWinner();
+                }
+            }
+        }
 
-    //     // Checking for Stalemate.
-    //     if (turnCount == (Math.Pow(board.GetLength(0), 2) - 1))
-    //     {
-    //         //report draw
-    //     }
-    // }
+        // Checking Anti-Diagonal.
+        if (x + y == board.GetLength(0) - 1)
+        {
+            for (int i = 0; i < board.GetLength(0); i++)
+            {
+                if (board[i, (board.GetLength(0) - 1) - i].GetValue() != token)
+                    break;
+                if (i == board.GetLength(0) - 1)
+                {
+                    PrintWinner();
+                }
+            }
+        }
 
-    private void _on_Square_pressed(){
+        // Checking for Stalemate.
+        if (turnCount == (Math.Pow(board.GetLength(0), 2) - 1))
+        {
+            GD.Print("Draw");
+        }
+    }
+
+    private void PrintWinner()
+    {
+        if (currentPlayer == Token.Cross)
+        {
+            GD.Print("Crosses Wins!");
+        }
+
+        if (currentPlayer == Token.Nought)
+        {
+            GD.Print("Noughts Wins!");
+        }
+
+        if (currentPlayer != Token.Cross && currentPlayer != Token.Nought)
+        {
+            GD.Print("Cannot find Winner. CurrentPlayer: " + currentPlayer);
+        }
+
+        ClearBoard();
+    }
+
+    private void _on_Square_pressed()
+    {
         GD.Print(55);
-        EmitSignal("CustomSignal", this);
+        EmitSignal("CustomSignal", this, turnCount);
     }
 }
