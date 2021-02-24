@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Assets/Fonts/Minecraftia.tres" type="DynamicFont" id=1]
+
+[node name="Title" type="Label"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -135.0
+margin_top = -30.0
+margin_right = 135.0
+margin_bottom = -7.99999
+custom_fonts/font = ExtResource( 1 )
+text = "An Afternoon with the Queen"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

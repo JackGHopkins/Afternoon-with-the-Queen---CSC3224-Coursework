@@ -10,15 +10,19 @@ public class Token
 
 public class NoughtsCrosses : Node
 {
+    [Export(PropertyHint.File)] String[] endScenePath;
+
     TokenButton[,] board = new TokenButton[3, 3];
 
     private int currentPlayer = Token.Cross;
     private int turnCount = 0;
+    private int maxTurnCount = 0;
 
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
+        maxTurnCount = (int)Math.Pow(board.GetLength(0), 2);
         for (int i = 0; i < board.GetLength(0); i++)
         {
             for (int j = 0; j < board.GetLength(1); j++)
@@ -34,8 +38,8 @@ public class NoughtsCrosses : Node
     // Fires signal
     public void OnTokenPressed(TokenButton button)
     {
-        GD.Print("TokenPressed: " + button.GetX() + button.GetY() );
-        
+        GD.Print("TokenPressed: " + button.GetX() + button.GetY());
+
         AddToken(button.GetX(), button.GetY(), currentPlayer);
     }
 
@@ -130,28 +134,33 @@ public class NoughtsCrosses : Node
         }
 
         // Checking for Stalemate.
-        if (turnCount == (Math.Pow(board.GetLength(0), 2) - 1))
+        if (turnCount == maxTurnCount)
         {
-            GD.Print("Draw");
+            PrintWinner();
         }
     }
 
     private void PrintWinner()
     {
-        if (currentPlayer == Token.Cross)
+        EndScene endScene = new EndScene();
+        //String winningText = "";
+        if (currentPlayer == Token.Cross && turnCount < maxTurnCount)
         {
-            GD.Print("Crosses Wins!");
+            GetTree().ChangeScene(endScenePath[0]);
         }
-
-        if (currentPlayer == Token.Nought)
+        else if (currentPlayer == Token.Nought && turnCount < maxTurnCount)
         {
-            GD.Print("Noughts Wins!");
+            GetTree().ChangeScene(endScenePath[1]);
         }
-
-        if (currentPlayer != Token.Cross && currentPlayer != Token.Nought)
+        else if (turnCount == maxTurnCount)
+        {
+            GetTree().ChangeScene(endScenePath[2]);
+        }
+        else if (currentPlayer != Token.Cross && currentPlayer != Token.Nought)
         {
             GD.Print("Cannot find Winner. CurrentPlayer: " + currentPlayer);
         }
+        //endScene.SetWinnerText(winningText);
 
         ClearBoard();
     }

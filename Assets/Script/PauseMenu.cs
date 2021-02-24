@@ -1,37 +1,34 @@
 using Godot;
 using System;
 
-public class PauseMenu : Menu
+public class PauseMenu : Control
 {
-    [Export] String[] Paths = new string[2];
 
-    // Called when the node enters the scene tree for the first time.
+    SceneTree sceneTree;
+    ColorRect pauseOverlay;
+    Boolean paused;
+
     public override void _Ready()
     {
-        MenuReady(Paths);
+        paused = false;
+        sceneTree = GetTree();
+        pauseOverlay = GetNode<ColorRect>("PauseOverlay");
     }
 
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(float delta)
+    public override void _UnhandledInput(InputEvent @event)
     {
-        MenuProcess();
+        if (@event.IsActionPressed("ui_cancel"))
+        {
+            SetPaused(!paused);
+            sceneTree.SetInputAsHandled();
+        }
     }
 
-    public override void HoverAccepted()
+    public void SetPaused(bool value)
     {
-        if (currentHover == 0)
-        {
-            GetTree().ChangeScene("res://Assets/Scenes/Noughts&Crosses.tscn");
-        }
-        else if (currentHover == 1)
-        {
-            var newPauseState = GetTree().Paused;
-            GetTree().Paused = !newPauseState;
-            Visible = newPauseState;
-        }
-        else if (currentHover == Nodes.Length - 1)
-        {
-            GetTree().Quit();
-        }
+        paused = value;
+        sceneTree.Paused = value;
+        pauseOverlay.Visible = value;
     }
+
 }

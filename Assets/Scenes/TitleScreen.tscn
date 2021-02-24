@@ -1,103 +1,46 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Assets/Script/TitleScreen.cs" type="Script" id=1]
-[ext_resource path="res://Assets/Fonts/Minecraftia-Regular.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://Assets/Fonts/Minecraftia.tres" type="DynamicFont" id=3]
+[ext_resource path="res://Assets/UIElements/Title.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/UIElements/ExitButton.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/UIElements/ChangeSceneButton.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Assets/Sprites/Background.png" type="Texture" id=5]
 
-[sub_resource type="DynamicFont" id=1]
-size = 8
-font_data = ExtResource( 2 )
-
-[node name="TitleScreen" type="MarginContainer"]
+[node name="TitleScreen" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 1 )
+margin_top = 0.5
+margin_bottom = 0.5
 __meta__ = {
 "_edit_use_anchors_": false
 }
-Paths = PoolStringArray( "TitleScreen/VBoxContainer/Start/VBoxContainer/CenterContainer/HBoxContainer/Hover", "TitleScreen/VBoxContainer/Exit/VBoxContainer/CenterContainer/HBoxContainer/Hover" )
 
-[node name="TitleScreen" type="CenterContainer" parent="."]
-margin_right = 320.0
-margin_bottom = 240.0
+[node name="Background" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 5 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TitleScreen"]
-margin_left = 25.0
-margin_top = 94.0
-margin_right = 295.0
-margin_bottom = 146.0
+[node name="Title" parent="." instance=ExtResource( 2 )]
 
-[node name="Title" type="CenterContainer" parent="TitleScreen/VBoxContainer"]
-margin_right = 270.0
-margin_bottom = 22.0
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -7.5
+margin_right = 20.0
+margin_bottom = 32.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="TitleText" type="Label" parent="TitleScreen/VBoxContainer/Title"]
-margin_right = 270.0
-margin_bottom = 22.0
-custom_fonts/font = ExtResource( 3 )
-text = "An Afternoon with the Queen"
+[node name="Start" parent="VBoxContainer" instance=ExtResource( 4 )]
+nextScenePath = "res://Assets/Scenes/Noughts&Crosses.tscn"
 
-[node name="Start" type="CenterContainer" parent="TitleScreen/VBoxContainer"]
-margin_top = 26.0
-margin_right = 270.0
-margin_bottom = 37.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="TitleScreen/VBoxContainer/Start"]
-margin_left = 116.0
-margin_right = 153.0
-margin_bottom = 11.0
-
-[node name="CenterContainer" type="CenterContainer" parent="TitleScreen/VBoxContainer/Start/VBoxContainer"]
-margin_right = 37.0
-margin_bottom = 11.0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="TitleScreen/VBoxContainer/Start/VBoxContainer/CenterContainer"]
-margin_right = 37.0
-margin_bottom = 11.0
-
-[node name="Hover" type="Label" parent="TitleScreen/VBoxContainer/Start/VBoxContainer/CenterContainer/HBoxContainer"]
-margin_right = 7.0
-margin_bottom = 11.0
-rect_min_size = Vector2( 7, 0 )
-custom_fonts/font = SubResource( 1 )
-text = ">"
-
-[node name="Start" type="Label" parent="TitleScreen/VBoxContainer/Start/VBoxContainer/CenterContainer/HBoxContainer"]
-margin_left = 11.0
-margin_right = 37.0
-margin_bottom = 11.0
-custom_fonts/font = SubResource( 1 )
-text = "Start"
-
-[node name="Exit" type="CenterContainer" parent="TitleScreen/VBoxContainer"]
-margin_top = 41.0
-margin_right = 270.0
-margin_bottom = 52.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="TitleScreen/VBoxContainer/Exit"]
-margin_left = 116.0
-margin_right = 153.0
-margin_bottom = 11.0
-
-[node name="CenterContainer" type="CenterContainer" parent="TitleScreen/VBoxContainer/Exit/VBoxContainer"]
-margin_right = 37.0
-margin_bottom = 11.0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="TitleScreen/VBoxContainer/Exit/VBoxContainer/CenterContainer"]
-margin_right = 37.0
-margin_bottom = 11.0
-
-[node name="Hover" type="Label" parent="TitleScreen/VBoxContainer/Exit/VBoxContainer/CenterContainer/HBoxContainer"]
-margin_right = 7.0
-margin_bottom = 11.0
-rect_min_size = Vector2( 7, 0 )
-custom_fonts/font = SubResource( 1 )
-text = ">"
-
-[node name="Exit" type="Label" parent="TitleScreen/VBoxContainer/Exit/VBoxContainer/CenterContainer/HBoxContainer"]
-margin_left = 11.0
-margin_right = 37.0
-margin_bottom = 11.0
-rect_min_size = Vector2( 26, 0 )
-custom_fonts/font = SubResource( 1 )
-text = "Exit"
+[node name="Exit" parent="VBoxContainer" instance=ExtResource( 3 )]
+margin_top = 22.0
+margin_bottom = 40.0
