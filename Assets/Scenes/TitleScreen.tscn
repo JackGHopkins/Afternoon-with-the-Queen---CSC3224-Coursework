@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
+[ext_resource path="res://Assets/Script/Music.cs" type="Script" id=1]
 [ext_resource path="res://Assets/UIElements/Title.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Assets/UIElements/ExitButton.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Assets/UIElements/ChangeSceneButton.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Assets/Sprites/Background.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Music/God Save The Queen (UK National Anthem) [8 Bit Tribute to The United Kingdom] - 8 Bit Universe.wav" type="AudioStream" id=6]
 
 [node name="TitleScreen" type="Control"]
 anchor_right = 1.0
@@ -44,3 +46,8 @@ nextScenePath = "res://Assets/Scenes/Noughts&Crosses.tscn"
 [node name="Exit" parent="VBoxContainer" instance=ExtResource( 3 )]
 margin_top = 22.0
 margin_bottom = 40.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = -10.0
+script = ExtResource( 1 )
