@@ -166,12 +166,16 @@ __meta__ = {
 row = 2
 col = 2
 
+[node name="AIDelay" type="Timer" parent="Grid3x3"]
+pause_mode = 2
+
 [node name="Queen" type="Sprite" parent="."]
 position = Vector2( 72, 112 )
 z_index = 5
 texture = ExtResource( 3 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
 stream = ExtResource( 6 )
 volume_db = -5.0
 autoplay = true
@@ -185,3 +189,4 @@ script = ExtResource( 7 )
 [connection signal="pressed" from="Grid3x3/Square2,0" to="Grid3x3/Square2,0" method="_on_Square_pressed"]
 [connection signal="pressed" from="Grid3x3/Square2,1" to="Grid3x3/Square2,1" method="_on_Square_pressed"]
 [connection signal="pressed" from="Grid3x3/Square2,2" to="Grid3x3/Square2,2" method="_on_Square_pressed"]
+[connection signal="timeout" from="Grid3x3/AIDelay" to="Grid3x3" method="_on_AI_Turn"]

@@ -27,8 +27,8 @@ Only time will tell...
 ## Game Design (10 Marks)
 **Possible Interaction** - If Player can influence the enviroment (3 Marks):
 - [X] Place Tokens
-- [ ] AI / Queen reacts to placement of Token.
-- [ ] The Speed at which the Queen places the Token varies
+- [X] AI / Queen reacts to placement of Token.
+- [X] The Speed at which the Queen places the Token varies
 
 **Genre Clarity** - If its clear what the Player has to do after a little experimenting (3 Marks):
 - [X] Make it clear its a game of Noughts and Crosses.

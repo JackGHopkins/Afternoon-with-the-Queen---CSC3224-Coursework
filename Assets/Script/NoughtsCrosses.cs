@@ -11,6 +11,12 @@ public class Token
 public class NoughtsCrosses : Node
 {
     [Export(PropertyHint.File)] String[] endScenePath;
+    [Export] bool singlePlayer = true;
+    [Export] bool bestAI;
+
+    int[] aiMoveCoord = new int[2];
+
+    Timer delayTimer;
 
     TokenButton[,] board = new TokenButton[3, 3];
 
@@ -18,11 +24,14 @@ public class NoughtsCrosses : Node
     private int turnCount = 0;
     private int maxTurnCount = 0;
 
-
-    // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
+        GetTree().Paused = false;
+        delayTimer = GetNode<Timer>("AIDelay");
+        delayTimer.OneShot = true;
+
         maxTurnCount = (int)Math.Pow(board.GetLength(0), 2);
+        // Making the Board
         for (int i = 0; i < board.GetLength(0); i++)
         {
             for (int j = 0; j < board.GetLength(1); j++)
@@ -41,6 +50,21 @@ public class NoughtsCrosses : Node
         GD.Print("TokenPressed: " + button.GetX() + button.GetY());
 
         AddToken(button.GetX(), button.GetY(), currentPlayer);
+
+        if (singlePlayer == true && currentPlayer == Token.Nought && turnCount != maxTurnCount)
+        {
+            if (!bestAI)
+            {
+                Random random = new Random();
+                int pause = random.Next(2, 1.5);
+
+                delayTimer.WaitTime = (float)pause / 10;
+                GD.Print("The Queen is thinking...");
+                delayTimer.Start();
+                GetTree().Paused = true;
+                GD.Print("The queen has moved. Time: " + (float)pause / 10);
+            }
+        }
     }
 
     public void ClearBoard()
@@ -78,6 +102,10 @@ public class NoughtsCrosses : Node
                 board[x, y].SetNought();
                 currentPlayer = Token.Cross;
             }
+        }
+        else if (board[x, y].GetValue() != 0 && token == Token.Nought && singlePlayer == true)
+        {
+            GD.Print("Values are: [" + x + "," + y + "] - Cannot be placed.");
         }
     }
 
@@ -165,9 +193,68 @@ public class NoughtsCrosses : Node
         ClearBoard();
     }
 
+    public void AITurn()
+    {
+        // if (bestAI == true)
+        // {
+        //     ai.BestMove();
+        //     BestMove();
+        // }
+        // else
+        // {
+        //ai.RandomMove();
+        RandomMove();
+        //}
+        AddToken(aiMoveCoord[0], aiMoveCoord[1], Token.Nought);
+    }
+
+    public int[] BestMove()
+    {
+        return aiMoveCoord;
+    }
+
+    /*
+        The idea is to get the number of free cells left, and pick a random one between them. 
+        Iterate through cells, counting up only when a cell is free. When you find the cell, 
+        then you assign its x and y values to aiMoveCoord.
+    */
+    public void RandomMove()
+    {
+        Random rnd = new Random();
+        int movesLeft = maxTurnCount - turnCount - 1;
+        int randCell = rnd.Next(0, movesLeft + 1); // creates a random number between 0 and number of movesLeft. 
+        int cellCount = 0;
+
+        GD.Print("movesLeft: " + movesLeft);
+        GD.Print("randCell: " + randCell);
+
+        for (int i = 0; i < board.GetLength(0); i++)
+        {
+            for (int j = 0; j < board.GetLength(1); j++)
+            {
+                if (board[i, j].GetValue() == 0)
+                {
+                    if (randCell == cellCount)
+                    {
+                        aiMoveCoord[0] = i;
+                        aiMoveCoord[1] = j;
+                        return;
+                    }
+                    cellCount++;
+                }
+            }
+        }
+    }
+
     private void _on_Square_pressed()
     {
         GD.Print(55);
         EmitSignal("CustomSignal", this, turnCount);
+    }
+
+    private void _on_AI_Turn()
+    {
+        GetTree().Paused = false;
+        AITurn();
     }
 }
