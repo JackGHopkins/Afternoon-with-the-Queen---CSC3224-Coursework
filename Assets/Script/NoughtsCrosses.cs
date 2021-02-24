@@ -53,10 +53,14 @@ public class NoughtsCrosses : Node
 
         if (singlePlayer == true && currentPlayer == Token.Nought && turnCount != maxTurnCount)
         {
-            if (!bestAI)
+            if (bestAI)
+            {
+                AITurn();
+            }
+            else
             {
                 Random random = new Random();
-                int pause = random.Next(2, 1.5);
+                int pause = random.Next(2, 15);
 
                 delayTimer.WaitTime = (float)pause / 10;
                 GD.Print("The Queen is thinking...");
@@ -172,7 +176,7 @@ public class NoughtsCrosses : Node
     {
         EndScene endScene = new EndScene();
         //String winningText = "";
-        if (currentPlayer == Token.Cross && turnCount < maxTurnCount)
+        if (currentPlayer == Token.Cross)
         {
             GetTree().ChangeScene(endScenePath[0]);
         }
@@ -195,22 +199,45 @@ public class NoughtsCrosses : Node
 
     public void AITurn()
     {
-        // if (bestAI == true)
-        // {
-        //     ai.BestMove();
-        //     BestMove();
-        // }
-        // else
-        // {
-        //ai.RandomMove();
-        RandomMove();
-        //}
+        if (bestAI == true)
+        {
+            BestMove();
+        }
+        else
+        {
+            RandomMove();
+        }
         AddToken(aiMoveCoord[0], aiMoveCoord[1], Token.Nought);
     }
 
-    public int[] BestMove()
+    public void BestMove()
     {
-        return aiMoveCoord;
+        int score = 0;
+        int bestScore = 0;
+        for (int i = 0; i < board.GetLength(0); i++)
+        {
+            for (int j = 0; j < board.GetLength(1); j++)
+            {
+                if (board[i, j].GetValue() == 0)
+                {
+                    board[i, j].SetValue(Token.Nought);
+                    score = MiniMax();
+                    board[i, j].SetValue(Token.Null);
+
+                    if (score > bestScore)
+                    {
+                        bestScore = score;
+                        aiMoveCoord[0] = i;
+                        aiMoveCoord[1] = j;
+                    }
+                }
+            }
+        }
+    }
+
+    public int MiniMax()
+    {
+        return 1;
     }
 
     /*

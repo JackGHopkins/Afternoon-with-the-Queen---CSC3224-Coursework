@@ -20,6 +20,7 @@ z_index = 1
 texture = ExtResource( 4 )
 script = ExtResource( 1 )
 endScenePath = PoolStringArray( "res://Assets/Scenes/EndCrosses.tscn", "res://Assets/Scenes/EndNought.tscn", "res://Assets/Scenes/EndDraw.tscn" )
+bestAI = true
 
 [node name="Square0,0" type="TextureButton" parent="Grid3x3"]
 margin_left = -61.0
