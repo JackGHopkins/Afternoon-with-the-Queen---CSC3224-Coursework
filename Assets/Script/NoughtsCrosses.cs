@@ -4,8 +4,15 @@ using System;
 public class Token
 {
     public const int Null = 0;
-    public const int Cross = 1;
-    public const int Nought = 10;
+    public const int Cross = 10;
+    public const int Nought = -10;
+}
+
+public enum WinState
+{
+    Null = 0,
+    Winner = 1,
+    Tie = 2,
 }
 
 public class NoughtsCrosses : Node
@@ -18,11 +25,12 @@ public class NoughtsCrosses : Node
 
     Timer delayTimer;
 
-    TokenButton[,] board = new TokenButton[3, 3];
+    TokenButton[,] mainBoard = new TokenButton[3, 3];
 
     private int currentPlayer = Token.Cross;
     private int turnCount = 0;
     private int maxTurnCount = 0;
+    private bool hasWinner = false;
 
     public override void _Ready()
     {
@@ -30,18 +38,22 @@ public class NoughtsCrosses : Node
         delayTimer = GetNode<Timer>("AIDelay");
         delayTimer.OneShot = true;
 
-        maxTurnCount = (int)Math.Pow(board.GetLength(0), 2);
+        maxTurnCount = (int)Math.Pow(mainBoard.GetLength(0), 2);
         // Making the Board
-        for (int i = 0; i < board.GetLength(0); i++)
+        for (int i = 0; i < mainBoard.GetLength(0); i++)
         {
-            for (int j = 0; j < board.GetLength(1); j++)
+            for (int j = 0; j < mainBoard.GetLength(1); j++)
             {
                 var button = GetNode<TokenButton>("Square" + i.ToString() + "," + j.ToString());
-                board[i, j] = button;
+                mainBoard[i, j] = button;
                 GD.Print(button.ToString());
-                board[i, j].Connect("CustomSignal", this, "OnTokenPressed");
+                mainBoard[i, j].Connect("CustomSignal", this, "OnTokenPressed");
             }
         }
+        // if (bestAI){
+        //     currentPlayer = Token.Nought;
+        //     AITurn(mainBoard);
+        // }
     }
 
     // Fires signal
@@ -49,13 +61,13 @@ public class NoughtsCrosses : Node
     {
         GD.Print("TokenPressed: " + button.GetX() + button.GetY());
 
-        AddToken(button.GetX(), button.GetY(), currentPlayer);
+        AddToken(button.GetX(), button.GetY(), currentPlayer, mainBoard);
 
-        if (singlePlayer == true && currentPlayer == Token.Nought && turnCount != maxTurnCount)
+        if (singlePlayer == true && currentPlayer == Token.Nought && turnCount != maxTurnCount && !hasWinner)
         {
             if (bestAI)
             {
-                AITurn();
+                AITurn(mainBoard);
             }
             else
             {
@@ -71,7 +83,7 @@ public class NoughtsCrosses : Node
         }
     }
 
-    public void ClearBoard()
+    public void ClearBoard(TokenButton[,] board)
     {
         turnCount = 0;
         for (int i = 0; i < board.GetLength(0); i++)
@@ -83,13 +95,14 @@ public class NoughtsCrosses : Node
         }
     }
 
-    public void AddToken(int x, int y, int token)
+    public void AddToken(int x, int y, int token, TokenButton[,] board)
     {
         if (board[x, y].GetValue() == 0)
         {
             board[x, y].SetValue(token);
             turnCount++;
-            CheckWin(x, y, token);
+            //PrintBoard(board);
+            PrintWinner(CheckWin(board));
 
             if (currentPlayer != Token.Cross && currentPlayer != Token.Nought)
             {
@@ -113,120 +126,124 @@ public class NoughtsCrosses : Node
         }
     }
 
-    public void CheckWin(int x, int y, int token)
+    public WinState CheckWin(TokenButton[,] board)
     {
         // Checking Column.
         for (int i = 0; i < board.GetLength(1); i++)
         {
-            if (board[x, i].GetValue() != token)
-                break;
-            if (i == board.GetLength(1) - 1)
-            {
-                PrintWinner();
-            }
+            // Checking if all three are equal to each other. And not Empty.
+            if (board[i, 0].GetValue() == board[i, 1].GetValue() && board[i, 1].GetValue() == board[i, 2].GetValue() && board[i, 0].GetValue() != 0)
+                return WinState.Winner;
         }
 
         // Checking Row.
         for (int i = 0; i < board.GetLength(0); i++)
         {
-            if (board[i, y].GetValue() != token)
-                break;
-            if (i == board.GetLength(0) - 1)
+            // Checking if all three are equal to each other. And not Empty.
+            if (board[0, i].GetValue() == board[1, i].GetValue() && board[1, i].GetValue() == board[2, i].GetValue() && board[0, i].GetValue() != 0)
+                return WinState.Winner;
+        }
+
+        // Checking Diagonal. Checking if all three are equal to each other. And not Empty.
+        if (board[0, 0].GetValue() == board[1, 1].GetValue() && board[1, 1].GetValue() == board[2, 2].GetValue() && board[1, 1].GetValue() != 0)
+            return WinState.Winner;
+
+        // Checking Anti-Diagonal. Checking if all three are equal to each other. And not Empty.
+        if (board[2, 0].GetValue() == board[1, 1].GetValue() && board[1, 1].GetValue() == board[0, 2].GetValue() && board[1, 1].GetValue() != 0)
+            return WinState.Winner;
+
+        // Checking number of free cells
+        int cellsFree = 0;
+        for (int i = 0; i < board.GetLength(0); i++)
+        {
+            for (int j = 0; j < board.GetLength(1); j++)
             {
-                PrintWinner();
+                if (board[i, j].GetValue() == Token.Null)
+                    cellsFree++;
             }
         }
 
-        // Checking Diagonal.
-        if (x == y)
-        {
-            for (int i = 0; i < board.GetLength(0); i++)
-            {
-                if (board[i, i].GetValue() != token)
-                    break;
-                if (i == board.GetLength(0) - 1)
-                {
-                    PrintWinner();
-                }
-            }
-        }
-
-        // Checking Anti-Diagonal.
-        if (x + y == board.GetLength(0) - 1)
-        {
-            for (int i = 0; i < board.GetLength(0); i++)
-            {
-                if (board[i, (board.GetLength(0) - 1) - i].GetValue() != token)
-                    break;
-                if (i == board.GetLength(0) - 1)
-                {
-                    PrintWinner();
-                }
-            }
-        }
 
         // Checking for Stalemate.
-        if (turnCount == maxTurnCount)
+        if (cellsFree == 0)
         {
-            PrintWinner();
+            return WinState.Tie;
         }
+
+        return WinState.Null;
     }
 
-    private void PrintWinner()
+    private void PrintWinner(WinState state)
     {
-        EndScene endScene = new EndScene();
-        //String winningText = "";
-        if (currentPlayer == Token.Cross)
+        if (state == WinState.Null)
         {
-            GetTree().ChangeScene(endScenePath[0]);
+            return;
         }
-        else if (currentPlayer == Token.Nought && turnCount < maxTurnCount)
+        else if (state == WinState.Winner)
         {
-            GetTree().ChangeScene(endScenePath[1]);
+            if (currentPlayer == Token.Cross)
+            {
+                GetTree().ChangeScene(endScenePath[0]);               
+            }
+            else if (currentPlayer == Token.Nought && turnCount < maxTurnCount)
+            {
+                GetTree().ChangeScene(endScenePath[1]);
+            }
+            hasWinner = true;
         }
-        else if (turnCount == maxTurnCount)
+        else if (state == WinState.Tie)
         {
-            GetTree().ChangeScene(endScenePath[2]);
+            if (turnCount == maxTurnCount)
+            {
+                GetTree().ChangeScene(endScenePath[2]);
+            }
         }
         else if (currentPlayer != Token.Cross && currentPlayer != Token.Nought)
         {
             GD.Print("Cannot find Winner. CurrentPlayer: " + currentPlayer);
         }
-        //endScene.SetWinnerText(winningText);
-
-        ClearBoard();
+        ClearBoard(mainBoard);
     }
 
-    public void AITurn()
+    public void AITurn(TokenButton[,] copyBoard)
     {
         if (bestAI == true)
         {
-            BestMove();
+            BestMove(copyBoard);
         }
         else
         {
-            RandomMove();
+            RandomMove(copyBoard);
         }
-        AddToken(aiMoveCoord[0], aiMoveCoord[1], Token.Nought);
+        AddToken(aiMoveCoord[0], aiMoveCoord[1], Token.Nought, copyBoard);
     }
 
-    public void BestMove()
+    public void BestMove(TokenButton[,] board)
     {
-        int score = 0;
-        int bestScore = 0;
+        GD.Print("\n");
+        GD.Print("Turn:" + turnCount);
+        int bestScore = int.MaxValue;
+
         for (int i = 0; i < board.GetLength(0); i++)
         {
             for (int j = 0; j < board.GetLength(1); j++)
             {
-                if (board[i, j].GetValue() == 0)
+                // Is spot available?
+                if (board[i, j].GetValue() == Token.Null)
                 {
+
                     board[i, j].SetValue(Token.Nought);
-                    score = MiniMax();
+
+                    int score = MiniMax(board, 0, true, Token.Nought);
                     board[i, j].SetValue(Token.Null);
 
-                    if (score > bestScore)
+                    GD.Print("Score: " + score + ": [" + i + "," + j + "]");
+
+                    if (score < bestScore)
                     {
+                        GD.Print("BestScore: " + bestScore + ": [" + i + "," + j + "]");
                         bestScore = score;
+                        GD.Print("BestScore [Updated]: " + bestScore + ": [" + i + "," + j + "]");
                         aiMoveCoord[0] = i;
                         aiMoveCoord[1] = j;
                     }
@@ -235,17 +252,68 @@ public class NoughtsCrosses : Node
         }
     }
 
-    public int MiniMax()
+    public int MiniMax(TokenButton[,] tempBoard, int depth, bool isMaximising, int token)
     {
-        return 1;
+        WinState state = CheckWin(tempBoard);
+        if (state == WinState.Winner)
+        {
+            if (token == Token.Cross)
+                return (int)token;
+            else if (token == Token.Nought)
+                return (int)token;
+        }
+        else if (state == WinState.Tie)
+        {
+            return 0;
+        }
+
+        if (isMaximising) // Crosses is playing.
+        {
+            int bestScore = int.MinValue;
+            for (int i = 0; i < tempBoard.GetLength(0); i++)
+            {
+                for (int j = 0; j < tempBoard.GetLength(1); j++)
+                {
+                    if (tempBoard[i, j].GetValue() == Token.Null)
+                    {
+                        tempBoard[i, j].SetValue(Token.Cross);
+                        int score = MiniMax(tempBoard, depth + 1, false, Token.Cross);
+                        tempBoard[i, j].SetValue(Token.Null);
+
+                        bestScore = Math.Max(score, bestScore);
+                    }
+                }
+            }
+            return bestScore;
+        }
+        else // If minimising. Noughts is playing.
+        {
+            int bestScore = int.MaxValue;
+            for (int i = 0; i < tempBoard.GetLength(0); i++)
+            {
+                for (int j = 0; j < tempBoard.GetLength(1); j++)
+                {
+                    if (tempBoard[i, j].GetValue() == Token.Null)
+                    {
+                        tempBoard[i, j].SetValue(Token.Nought);
+                        int score = MiniMax(tempBoard, depth + 1, true, Token.Nought);
+                        tempBoard[i, j].SetValue(Token.Null);
+
+                        bestScore = Math.Min(score, bestScore);
+                    }
+                }
+            }
+            return bestScore;
+        }
     }
+
 
     /*
         The idea is to get the number of free cells left, and pick a random one between them. 
         Iterate through cells, counting up only when a cell is free. When you find the cell, 
         then you assign its x and y values to aiMoveCoord.
     */
-    public void RandomMove()
+    public void RandomMove(TokenButton[,] board)
     {
         Random rnd = new Random();
         int movesLeft = maxTurnCount - turnCount - 1;
@@ -282,6 +350,15 @@ public class NoughtsCrosses : Node
     private void _on_AI_Turn()
     {
         GetTree().Paused = false;
-        AITurn();
+        AITurn(mainBoard);
+    }
+
+    void PrintBoard(TokenButton[,] printBoard)
+    {
+        GD.Print(" " + printBoard[0, 0].GetValue() + " | " + printBoard[0, 1].GetValue() + " | " + printBoard[0, 2].GetValue());
+        GD.Print("-------------------------");
+        GD.Print(" " + printBoard[1, 0].GetValue() + " | " + printBoard[1, 1].GetValue() + " | " + printBoard[1, 2].GetValue());
+        GD.Print("-------------------------");
+        GD.Print(" " + printBoard[2, 0].GetValue() + " | " + printBoard[2, 1].GetValue() + " | " + printBoard[2, 2].GetValue());
     }
 }

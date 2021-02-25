@@ -24,14 +24,14 @@ public class TokenButton : TextureButton
     }
     public void SetCross()
     {
-        value = 1;
+        value = 10;
         TextureNormal = textureCross;
         TextureHover = textureCrossHover;
     }
 
     public void SetNought()
     {
-        value = 10;
+        value = -10;
         TextureNormal = textureNought;
         TextureHover = textureNoughtHover;
     }
