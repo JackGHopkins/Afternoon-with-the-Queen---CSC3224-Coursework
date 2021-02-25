@@ -234,7 +234,7 @@ public class NoughtsCrosses : Node
 
                     board[i, j].SetValue(Token.Nought);
 
-                    int score = MiniMax(board, 0, true, Token.Nought);
+                    int score = MiniMax(board, 0, true, Token.Nought, int.MinValue, int.MaxValue);
                     board[i, j].SetValue(Token.Null);
 
                     GD.Print("Score: " + score + ": [" + i + "," + j + "]");
@@ -252,7 +252,7 @@ public class NoughtsCrosses : Node
         }
     }
 
-    public int MiniMax(TokenButton[,] tempBoard, int depth, bool isMaximising, int token)
+    public int MiniMax(TokenButton[,] tempBoard, int depth, bool isMaximising, int token, int alpha, int beta)
     {
         WinState state = CheckWin(tempBoard);
         if (state == WinState.Winner)
@@ -277,10 +277,16 @@ public class NoughtsCrosses : Node
                     if (tempBoard[i, j].GetValue() == Token.Null)
                     {
                         tempBoard[i, j].SetValue(Token.Cross);
-                        int score = MiniMax(tempBoard, depth + 1, false, Token.Cross);
+                        int score = MiniMax(tempBoard, depth + 1, false, Token.Cross, alpha, beta);
                         tempBoard[i, j].SetValue(Token.Null);
 
                         bestScore = Math.Max(score, bestScore);
+
+                        //Beta
+                        alpha = Math.Max(alpha, score);
+                        if (beta <= alpha){
+                            break;
+                        }
                     }
                 }
             }
@@ -296,10 +302,16 @@ public class NoughtsCrosses : Node
                     if (tempBoard[i, j].GetValue() == Token.Null)
                     {
                         tempBoard[i, j].SetValue(Token.Nought);
-                        int score = MiniMax(tempBoard, depth + 1, true, Token.Nought);
+                        int score = MiniMax(tempBoard, depth + 1, true, Token.Nought, alpha, beta);
                         tempBoard[i, j].SetValue(Token.Null);
 
                         bestScore = Math.Min(score, bestScore);
+
+                        //Beta
+                        beta = Math.Min(beta, score);
+                        if (beta <= alpha){
+                            break;
+                        }
                     }
                 }
             }
