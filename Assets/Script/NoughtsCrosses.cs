@@ -15,7 +15,7 @@ public enum WinState
     Tie = 2,
 }
 
-public class NoughtsCrosses : Node
+public class NoughtsCrosses : Sprite
 {
     [Export(PropertyHint.File)] String[] endScenePath;
     [Export] bool singlePlayer = true;
@@ -24,10 +24,11 @@ public class NoughtsCrosses : Node
     int[] aiMoveCoord = new int[2];
 
     Timer delayTimer;
+    PlayerTimer playerTimer;
 
     TokenButton[,] mainBoard = new TokenButton[3, 3];
 
-    private int currentPlayer = Token.Cross;
+    public int currentPlayer { get; set; } 
     private int turnCount = 0;
     private int maxTurnCount = 0;
     private bool hasWinner = false;
@@ -37,6 +38,7 @@ public class NoughtsCrosses : Node
         GetTree().Paused = false;
         delayTimer = GetNode<Timer>("AIDelay");
         delayTimer.OneShot = true;
+        currentPlayer = Token.Cross;
 
         maxTurnCount = (int)Math.Pow(mainBoard.GetLength(0), 2);
         // Making the Board
@@ -50,10 +52,10 @@ public class NoughtsCrosses : Node
                 mainBoard[i, j].Connect("CustomSignal", this, "OnTokenPressed");
             }
         }
-        // if (bestAI){
-        //     currentPlayer = Token.Nought;
-        //     AITurn(mainBoard);
-        // }
+    }
+
+    public override void _Process(float delta)
+    {
     }
 
     // Fires signal

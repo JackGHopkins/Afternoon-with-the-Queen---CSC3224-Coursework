@@ -7,7 +7,7 @@ public class TokenButton : TextureButton
     Texture textureCrossHover = ResourceLoader.Load("res://Assets/Sprites/CrossHovered3x3.png") as Texture;
     Texture textureNought = ResourceLoader.Load("res://Assets/Sprites/Nought3x3.png") as Texture;
     Texture textureNoughtHover = ResourceLoader.Load("res://Assets/Sprites/NoughtHovered3x3.png") as Texture;
-    Texture textureHover = ResourceLoader.Load("res://Assets/Sprites/Hover3x3.png") as Texture;    
+    Texture textureHover = ResourceLoader.Load("res://Assets/Sprites/Hover3x3.png") as Texture;
 
     int value = 0;
     [Export] int row = -1;
@@ -21,7 +21,22 @@ public class TokenButton : TextureButton
         if (startFocused)
             GrabFocus();
         Reset();
+
+        Input.SetMouseMode(Input.MouseMode.Confined);
     }
+
+    public override void _Process(float delta)
+    {
+        if (GetTree().Paused)
+        {
+            FocusMode = FocusModeEnum.None;
+        }
+        else
+        {
+            FocusMode = FocusModeEnum.All;
+        }
+    }
+
     public void SetCross()
     {
         value = 10;
@@ -48,12 +63,11 @@ public class TokenButton : TextureButton
     {
         EmitSignal("CustomSignal", this);
     }
-    
+
     public int GetValue() { return value; }
-    public int GetX() { return row;}
-    public int GetY() { return col;}
+    public int GetX() { return row; }
+    public int GetY() { return col; }
 
-    public void SetValue(int value) { this.value = value;}
+    public void SetValue(int value) { this.value = value; }
 
-    
 }

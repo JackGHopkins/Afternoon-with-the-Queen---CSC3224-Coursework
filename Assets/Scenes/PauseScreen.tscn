@@ -1,10 +1,28 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Assets/UIElements/Title.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Assets/UIElements/ChangeSceneButton.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Assets/UIElements/ExitButton.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Assets/UIElements/RestartButton.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Assets/Script/PauseMenu.cs" type="Script" id=5]
+[ext_resource path="res://Assets/Fonts/Minecraftia-Regular.ttf" type="DynamicFontData" id=6]
+
+[sub_resource type="DynamicFontData" id=1]
+font_path = "res://Assets/Fonts/Minecraftia-Regular.ttf"
+
+[sub_resource type="DynamicFont" id=4]
+size = 8
+font_data = SubResource( 1 )
+
+[sub_resource type="DynamicFontData" id=5]
+font_path = "res://Assets/Fonts/Minecraftia-Regular.ttf"
+
+[sub_resource type="DynamicFont" id=2]
+size = 8
+font_data = SubResource( 5 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 8
+font_data = ExtResource( 6 )
 
 [node name="PauseScene" type="Control"]
 pause_mode = 2
@@ -16,15 +34,25 @@ __meta__ = {
 }
 
 [node name="PauseOverlay" type="ColorRect" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0, 0, 0, 0.52549 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Title" parent="PauseOverlay" instance=ExtResource( 1 )]
 margin_top = -48.5
 margin_bottom = -26.5
+rect_pivot_offset = Vector2( 0, -46.892 )
 text = "Paused."
+
+[node name="Press Esc" parent="PauseOverlay" instance=ExtResource( 1 )]
+margin_top = -31.8511
+margin_bottom = -9.85107
+rect_pivot_offset = Vector2( 0, -46.892 )
+custom_fonts/font = SubResource( 4 )
+text = "(Press ESC to resume)"
 
 [node name="PauseMenu" type="VBoxContainer" parent="PauseOverlay"]
 anchor_left = 0.5
@@ -32,26 +60,44 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -25.0
-margin_top = -22.0
+margin_top = -9.37805
 margin_right = 25.0
-margin_bottom = 37.0
+margin_bottom = 28.6219
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ChangeSceneButton" parent="PauseOverlay/PauseMenu" instance=ExtResource( 2 )]
+[node name="Button" type="Button" parent="PauseOverlay/PauseMenu"]
+visible = false
 margin_right = 50.0
 margin_bottom = 17.0
+focus_neighbour_top = NodePath("../Exit")
+focus_neighbour_bottom = NodePath("../RestartButton")
+custom_fonts/font = SubResource( 2 )
 text = "Resume"
-nextScenePath = "res://Assets/Scenes/Noughts&Crosses.tscn"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="RestartButton" parent="PauseOverlay/PauseMenu" instance=ExtResource( 4 )]
-margin_top = 21.0
 margin_right = 50.0
-margin_bottom = 38.0
+margin_bottom = 17.0
+focus_neighbour_top = NodePath("../Button")
+focus_neighbour_bottom = NodePath("../Exit")
 text = "Restart"
 
 [node name="Exit" parent="PauseOverlay/PauseMenu" instance=ExtResource( 3 )]
-margin_top = 42.0
+margin_top = 21.0
 margin_right = 50.0
-margin_bottom = 59.0
+margin_bottom = 38.0
+focus_neighbour_top = NodePath("../RestartButton")
+focus_neighbour_bottom = NodePath("../Button")
+
+[node name="Label" type="Label" parent="PauseOverlay"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_fonts/font = SubResource( 3 )
+text = "Controls:
+Move Curser: Arrow Keys
+Place Token: Space Bar / Enter"
+[connection signal="pressed" from="PauseOverlay/PauseMenu/Button" to="." method="_on_ResumeButton_pressed"]
