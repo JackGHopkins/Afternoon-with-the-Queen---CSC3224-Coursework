@@ -1,0 +1,97 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Assets/Script/OptionsMenu.cs" type="Script" id=1]
+[ext_resource path="res://Assets/Script/DropdownButton.cs" type="Script" id=2]
+[ext_resource path="res://Assets/Fonts/MinecraftiaSmall.tres" type="DynamicFont" id=3]
+[ext_resource path="res://Assets/UIElements/Title.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Assets/Script/Option.cs" type="Script" id=5]
+
+[sub_resource type="DynamicFontData" id=1]
+font_path = "res://Assets/Fonts/Minecraftia-Regular.ttf"
+
+[sub_resource type="DynamicFont" id=2]
+size = 8
+font_data = SubResource( 1 )
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" parent="." instance=ExtResource( 4 )]
+margin_top = -36.8607
+margin_bottom = -14.8607
+text = "Options / Dev Tools"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -82.0
+margin_top = -11.2712
+margin_right = 82.0
+margin_bottom = 48.7288
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+margin_right = 164.0
+margin_bottom = 53.0
+custom_fonts/font = ExtResource( 3 )
+text = "1 = Toggle SinglePlayer [2 Player]
+2 = Random AI [EASY]
+3 = Unbeatable AI [HARD]
+4 = Toggle Timers"
+
+[node name="CheckButton" type="CheckBox" parent="VBoxContainer"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -32.0
+margin_top = -68.3572
+margin_right = 66.0
+margin_bottom = -44.3572
+custom_fonts/font = SubResource( 2 )
+text = "Single Player?"
+
+[node name="OptionButton" type="OptionButton" parent="VBoxContainer"]
+visible = false
+margin_right = 90.0
+margin_bottom = 18.0
+custom_fonts/font = ExtResource( 3 )
+text = "Difficulty"
+align = 1
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+Options = PoolStringArray( "Random [Easy]", "Unbeatable [Hard]", "Human [Two Player]" )
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+margin_top = 57.0
+margin_right = 164.0
+margin_bottom = 74.0
+custom_fonts/font = ExtResource( 3 )
+text = "Back"
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+Path = NodePath("../..")
+[connection signal="item_selected" from="VBoxContainer/OptionButton" to="." method="_on_AIDifficulty_item_selected"]
+[connection signal="pressed" from="VBoxContainer/Button" to="VBoxContainer/Button" method="_on_Option_pressed"]

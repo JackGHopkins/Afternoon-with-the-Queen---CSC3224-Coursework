@@ -5,8 +5,11 @@ public class PauseMenu : Control
 {
 
     [Export] Boolean paused = false;
+    [Export] NodePath optionsMenuPath;
+    [Signal] delegate void AIDifficultyFromPause();
     SceneTree sceneTree;
     ColorRect pauseOverlay;
+    private Button optionsMenu;
 
     public override void _Ready()
     {
@@ -14,6 +17,10 @@ public class PauseMenu : Control
         sceneTree = GetTree();
         pauseOverlay = GetNode<ColorRect>("PauseOverlay");
         pauseOverlay.Visible = false;
+
+        // Connecting AI Options to script
+        optionsMenu = GetNode<Button>(optionsMenuPath);
+        optionsMenu.Connect("AIDifficulty", this, "HandleAIDifficulty");
     }
 
     public override void _Process(float delta)
@@ -22,7 +29,6 @@ public class PauseMenu : Control
         {
             paused = false;
         }
-
     }
 
     public override void _UnhandledInput(InputEvent @event)
@@ -41,8 +47,12 @@ public class PauseMenu : Control
         pauseOverlay.Visible = value;
     }
 
-        public void _on_ResumeButton_pressed()
+    public void _on_ResumeButton_pressed()
     {
         SetPaused(!paused);
+    }
+
+    public void HandleAIDifficulty(){
+        GD.Print("PauseMenu");
     }
 }

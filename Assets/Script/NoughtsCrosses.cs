@@ -20,6 +20,11 @@ public class NoughtsCrosses : Sprite
     [Export(PropertyHint.File)] String[] endScenePath;
     [Export] bool singlePlayer = true;
     [Export] bool bestAI;
+    [Export] bool timerToggle = true;
+    [Export] NodePath optionsMenuPath;
+    [Export] NodePath aiPath;
+    [Export] NodePath timerQueenPath;
+    [Export] NodePath timerPrisonerPath;
 
     int[] aiMoveCoord = new int[2];
 
@@ -28,10 +33,14 @@ public class NoughtsCrosses : Sprite
 
     TokenButton[,] mainBoard = new TokenButton[3, 3];
 
-    public int currentPlayer { get; set; } 
+    public int currentPlayer { get; set; }
     private int turnCount = 0;
     private int maxTurnCount = 0;
     private bool hasWinner = false;
+    private Control optionsMenu;
+    private Label aiStatus;
+    private Label timerQueen;
+    private Label timerPrisoner;
 
     public override void _Ready()
     {
@@ -52,36 +61,44 @@ public class NoughtsCrosses : Sprite
                 mainBoard[i, j].Connect("CustomSignal", this, "OnTokenPressed");
             }
         }
+
+        // Connecting AI Options to script
+        optionsMenu = GetNode<Control>(optionsMenuPath);
+        optionsMenu.Connect("AIDifficulty", this, "HandleAIDifficulty");
+
+        // Setting up AI Status indicator
+        aiStatus = GetNode<Label>(aiPath);
+
+        // Setting up Timer
+        timerQueen = GetNode<Label>(timerQueenPath);
+        timerPrisoner = GetNode<Label>(timerPrisonerPath);
     }
 
     public override void _Process(float delta)
     {
+        AIStatus();
     }
 
-    // Fires signal
-    public void OnTokenPressed(TokenButton button)
+    public void AIStatus()
     {
-        GD.Print("TokenPressed: " + button.GetX() + button.GetY());
-
-        AddToken(button.GetX(), button.GetY(), currentPlayer, mainBoard);
-
-        if (singlePlayer == true && currentPlayer == Token.Nought && turnCount != maxTurnCount && !hasWinner)
+        if (Input.IsActionPressed("ToggleSinglePlayer"))
         {
-            if (bestAI)
-            {
-                AITurn(mainBoard);
-            }
-            else
-            {
-                Random random = new Random();
-                int pause = random.Next(2, 15);
+            singlePlayer = false;
+            aiStatus.Text = "Two Player";
+        }
 
-                delayTimer.WaitTime = (float)pause / 10;
-                GD.Print("The Queen is thinking...");
-                delayTimer.Start();
-                GetTree().Paused = true;
-                GD.Print("The queen has moved. Time: " + (float)pause / 10);
-            }
+        if (Input.IsActionPressed("ToggleRandomAI"))
+        {
+            singlePlayer = true;
+            bestAI = false;
+            aiStatus.Text = "Random AI";
+        }
+
+        if (Input.IsActionPressed("ToggleBestAI"))
+        {
+            singlePlayer = true;
+            bestAI = true;
+            aiStatus.Text = "Unbeatable";
         }
     }
 
@@ -185,7 +202,7 @@ public class NoughtsCrosses : Sprite
         {
             if (currentPlayer == Token.Cross)
             {
-                GetTree().ChangeScene(endScenePath[0]);               
+                GetTree().ChangeScene(endScenePath[0]);
             }
             else if (currentPlayer == Token.Nought && turnCount < maxTurnCount)
             {
@@ -286,7 +303,8 @@ public class NoughtsCrosses : Sprite
 
                         //Beta
                         alpha = Math.Max(alpha, score);
-                        if (beta <= alpha){
+                        if (beta <= alpha)
+                        {
                             break;
                         }
                     }
@@ -311,7 +329,8 @@ public class NoughtsCrosses : Sprite
 
                         //Beta
                         beta = Math.Min(beta, score);
-                        if (beta <= alpha){
+                        if (beta <= alpha)
+                        {
                             break;
                         }
                     }
@@ -353,6 +372,38 @@ public class NoughtsCrosses : Sprite
                 }
             }
         }
+    }
+
+    // SIGNALS
+    public void OnTokenPressed(TokenButton button)
+    {
+        GD.Print("TokenPressed: " + button.GetX() + button.GetY());
+
+        AddToken(button.GetX(), button.GetY(), currentPlayer, mainBoard);
+
+        if (singlePlayer == true && currentPlayer == Token.Nought && turnCount != maxTurnCount && !hasWinner)
+        {
+            if (bestAI)
+            {
+                AITurn(mainBoard);
+            }
+            else
+            {
+                Random random = new Random();
+                int pause = random.Next(2, 15);
+
+                delayTimer.WaitTime = (float)pause / 10;
+                GD.Print("The Queen is thinking...");
+                delayTimer.Start();
+                GetTree().Paused = true;
+                GD.Print("The queen has moved. Time: " + (float)pause / 10);
+            }
+        }
+    }
+
+    public void HandleAIDifficulty()
+    {
+        GD.Print("NoughtsxCross Ai Changed");
     }
 
     private void _on_Square_pressed()

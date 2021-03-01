@@ -22,7 +22,7 @@ public class TokenButton : TextureButton
             GrabFocus();
         Reset();
 
-        Input.SetMouseMode(Input.MouseMode.Confined);
+        //Input.SetMouseMode(Input.MouseMode.Confined);
     }
 
     public override void _Process(float delta)

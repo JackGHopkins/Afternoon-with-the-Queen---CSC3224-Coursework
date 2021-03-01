@@ -5,8 +5,10 @@ public class PlayerTimer : Label
 {
     [Export] bool isQueen = true;
     [Export] int time = 60;
+    [Export(PropertyHint.File)] String[] endScenePath;
 
     Timer timer;
+    bool timerEnabled = true;
 
     NoughtsCrosses grid;
 
@@ -42,7 +44,7 @@ public class PlayerTimer : Label
             timer.Stop();
             this.Text = "Prisoner - " + TimeToString();
         }
-        else if (timer.IsStopped())
+        else if (timer.IsStopped() && timerEnabled)
         {
             if (isQueen)
                 this.Text = ".Queen - " + TimeToString();
@@ -52,6 +54,25 @@ public class PlayerTimer : Label
             timer.Start();
         }
 
+        if (time == -1)
+        {
+            if (isQueen)
+            {
+                GetTree().ChangeScene(endScenePath[0]);
+            }
+            else
+            {
+                GetTree().ChangeScene(endScenePath[1]);
+            }
+        }
+
+        if (Input.IsActionJustPressed("ToggleTimers")){
+            GD.Print("Timers Toggled");
+            timerEnabled = !timerEnabled;
+        }
+        
+        if(!timerEnabled)
+            timer.Stop();
     }
 
     // Formats time to look like a digital clock.

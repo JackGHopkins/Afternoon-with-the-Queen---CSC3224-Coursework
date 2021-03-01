@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Assets/Fonts/Minecraftia.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Assets/Script/Introduction.cs" type="Script" id=2]
 
 [sub_resource type="DynamicFontData" id=1]
 font_path = "res://Assets/Fonts/Minecraftia-Regular.ttf"
@@ -12,9 +13,11 @@ font_data = SubResource( 1 )
 [node name="Control" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+nextScenePath = "res://Assets/Scenes/Noughts&Crosses.tscn"
 
 [node name="Title" type="Label" parent="."]
 anchor_left = 0.5
@@ -22,9 +25,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -57.0
-margin_top = -62.5905
+margin_top = -106.228
 margin_right = 57.0
-margin_bottom = -40.5905
+margin_bottom = -84.2279
 custom_fonts/font = ExtResource( 1 )
 text = "How To Play:"
 align = 1
@@ -34,14 +37,19 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -91.25
-margin_top = -22.2642
-margin_right = 91.25
-margin_bottom = 76.2358
+margin_left = -146.313
+margin_top = -75.5
+margin_right = 146.313
+margin_bottom = 75.5
 custom_fonts/font = SubResource( 2 )
 text = "You are a prisoner and have been summound by the Queen for a game of Noughts and Crosses
+[a.k.a Tic-Tac-Toe].
 
-If you win, you may gain your freedom."
+If you win, you may gain your freedom.
+
+Use the Keyboard to navigate the board and Mouse to navigate the menus.
+
+By default you are playing Easy Mode. Check Dev Tools (Pause Screen) for more options."
 align = 1
 autowrap = true
 __meta__ = {
@@ -54,10 +62,13 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -160.0
-margin_top = 83.1873
+margin_top = 87.9441
 margin_right = 160.0
-margin_bottom = 323.187
+margin_bottom = 327.944
 custom_fonts/font = SubResource( 2 )
 text = "(Press Space to Continue)"
 align = 1
 autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
