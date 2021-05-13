@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class Option : Button
+public class Options : Button
 {
     [Export] NodePath Path;
     Control menu;

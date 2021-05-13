@@ -4,6 +4,7 @@ using System;
 public class PlayerTimer : Label
 {
     [Export] bool isQueen = true;
+    [Export] bool isGuard = false;
     [Export] int time = 60;
     [Export(PropertyHint.File)] String[] endScenePath;
 
@@ -16,12 +17,14 @@ public class PlayerTimer : Label
     {
         if (isQueen)
             this.Text = "Queen - " + TimeToString();
+        else if (isGuard)
+            this.Text = "Guard - " + TimeToString();
         else
             this.Text = ".Prisoner - " + TimeToString();
 
         timer = GetNode<Timer>("Timer");
         timer.WaitTime = 1;
-        if (!isQueen)
+        if (!isQueen && !isGuard)
             timer.Start();
 
         grid = GetNode<NoughtsCrosses>("../Grid3x3");
@@ -38,8 +41,13 @@ public class PlayerTimer : Label
             timer.Stop();
             this.Text = "Queen - " + TimeToString();
         }
+        else if (isGuard && grid.currentPlayer != Token.Nought)
+        {
+            timer.Stop();
+            this.Text = "Guard - " + TimeToString();
+        }
         // Turn Player's timer of if its not her turn.
-        else if (!isQueen && grid.currentPlayer != Token.Cross)
+        else if ((!isQueen || !isGuard)  && grid.currentPlayer != Token.Cross)
         {
             timer.Stop();
             this.Text = "Prisoner - " + TimeToString();
@@ -56,7 +64,7 @@ public class PlayerTimer : Label
 
         if (time == -1)
         {
-            if (isQueen)
+            if (isQueen || isGuard)
             {
                 GetTree().ChangeScene(endScenePath[0]);
             }

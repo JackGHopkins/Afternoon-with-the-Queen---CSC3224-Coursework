@@ -17,7 +17,7 @@ public class DropdownButton : OptionButton
 //  }
 
     public void AddItems(String[] Options){
-        foreach( string i in Options)
+        foreach(string i in Options)
             this.AddItem(i);
     }
 }

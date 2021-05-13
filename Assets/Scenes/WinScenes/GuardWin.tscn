@@ -1,0 +1,78 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Assets/UIElements/Title.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/UIElements/ChangeSceneButton.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/UIElements/ExitButton.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/Sprites/Queen Faces/Guard_Win.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Fonts/Minecraftia-Regular.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://Assets/Script/EndScene.cs" type="Script" id=9]
+
+[sub_resource type="DynamicFont" id=1]
+size = 8
+font_data = ExtResource( 7 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 8
+font_data = ExtResource( 7 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 8
+font_data = ExtResource( 7 )
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PauseOverlay" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.52549 )
+
+[node name="Noughts Wins" parent="PauseOverlay" instance=ExtResource( 1 )]
+margin_top = -25.0
+margin_bottom = 7.62939e-06
+custom_fonts/font = SubResource( 1 )
+text = "W-wait? I actually won for once?!"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseOverlay"]
+pause_mode = 2
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -30.5
+margin_top = 10.0
+margin_right = 30.5
+margin_bottom = 50.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Start" parent="PauseOverlay/VBoxContainer" instance=ExtResource( 2 )]
+margin_right = 61.0
+margin_bottom = 17.0
+custom_fonts/font = SubResource( 2 )
+text = "Play Again"
+nextScenePath = "res://Assets/Scenes/GuardFight.tscn"
+
+[node name="MainMenu" parent="PauseOverlay/VBoxContainer" instance=ExtResource( 2 )]
+margin_top = 21.0
+margin_right = 61.0
+margin_bottom = 38.0
+custom_fonts/font = SubResource( 2 )
+text = "Main Menu"
+nextScenePath = "res://Assets/Scenes/TitleScreen.tscn"
+
+[node name="Exit" parent="PauseOverlay/VBoxContainer" instance=ExtResource( 3 )]
+margin_top = 42.0
+margin_right = 61.0
+margin_bottom = 59.0
+custom_fonts/font = SubResource( 3 )
+
+[node name="FacePleased" type="Sprite" parent="."]
+position = Vector2( 160, 50 )
+texture = ExtResource( 4 )

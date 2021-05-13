@@ -22,7 +22,7 @@ position = Vector2( 224, 120 )
 z_index = 1
 texture = ExtResource( 4 )
 script = ExtResource( 1 )
-endScenePath = PoolStringArray( "res://Assets/Scenes/EndCrosses.tscn", "res://Assets/Scenes/EndNought.tscn", "res://Assets/Scenes/EndDraw.tscn" )
+endScenePath = PoolStringArray( "res://Assets/Scenes/WinScenes/QueenLose.tscn", "res://Assets/Scenes/WinScenes/QueenWin.tscn", "res://Assets/Scenes/WinScenes/QueenDraw.tscn" )
 optionsMenuPath = NodePath("../PauseScene/PauseScene")
 aiPath = NodePath("../AIStatus")
 timerQueenPath = NodePath("../PlayerTimer")
@@ -201,7 +201,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 isQueen = false
-time = 20
+time = 10
+endScenePath = PoolStringArray( "res://Assets/Scenes/EndCrosses.tscn", "res://Assets/Scenes/EndNought.tscn" )
 
 [node name="Timer" type="Timer" parent="PlayerTimer"]
 pause_mode = 1
@@ -220,7 +221,8 @@ script = ExtResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-time = 20
+time = 10
+endScenePath = PoolStringArray( "res://Assets/Scenes/EndCrosses.tscn", "res://Assets/Scenes/EndNought.tscn" )
 
 [node name="Timer" type="Timer" parent="QueenTimer"]
 pause_mode = 1

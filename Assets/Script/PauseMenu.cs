@@ -20,7 +20,7 @@ public class PauseMenu : Control
 
         // Connecting AI Options to script
         optionsMenu = GetNode<Button>(optionsMenuPath);
-        optionsMenu.Connect("AIDifficulty", this, "HandleAIDifficulty");
+        //optionsMenu.Connect("AIDifficulty", this, "HandleAIDifficulty");
     }
 
     public override void _Process(float delta)

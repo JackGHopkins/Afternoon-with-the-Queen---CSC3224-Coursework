@@ -1,0 +1,251 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Assets/Script/NoughtsCrosses.cs" type="Script" id=1]
+[ext_resource path="res://Assets/Script/TokenButton.cs" type="Script" id=2]
+[ext_resource path="res://Assets/Sprites/Queen.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Sprites/Grid3x3.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Scenes/PauseScreen.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Assets/Music/British Grenadiers Chiptune Cover.wav" type="AudioStream" id=6]
+[ext_resource path="res://Assets/Script/Music.cs" type="Script" id=7]
+[ext_resource path="res://Assets/Fonts/Minecraftia.tres" type="DynamicFont" id=8]
+[ext_resource path="res://Assets/Script/PlayerTimer.cs" type="Script" id=9]
+[ext_resource path="res://Assets/Fonts/MinecraftiaSmall.tres" type="DynamicFont" id=10]
+
+[node name="Node2D" type="Node"]
+
+[node name="PauseScene" type="CanvasLayer" parent="."]
+
+[node name="PauseScene" parent="PauseScene" instance=ExtResource( 5 )]
+
+[node name="Grid3x3" type="Sprite" parent="."]
+position = Vector2( 224, 120 )
+z_index = 1
+texture = ExtResource( 4 )
+script = ExtResource( 1 )
+endScenePath = PoolStringArray( "res://Assets/Scenes/EndCrosses.tscn", "res://Assets/Scenes/EndNought.tscn", "res://Assets/Scenes/EndDraw.tscn" )
+optionsMenuPath = NodePath("../PauseScene/PauseScene")
+aiPath = NodePath("../AIStatus")
+timerQueenPath = NodePath("../PlayerTimer")
+timerPrisonerPath = NodePath("../QueenTimer")
+
+[node name="Square0,0" type="TextureButton" parent="Grid3x3"]
+margin_left = -61.0
+margin_top = -61.0
+margin_right = -29.0
+margin_bottom = -29.0
+focus_neighbour_left = NodePath("../Square0,2")
+focus_neighbour_top = NodePath("../Square2,0")
+focus_neighbour_right = NodePath("../Square0,1")
+focus_neighbour_bottom = NodePath("../Square1,0")
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+row = 0
+col = 0
+
+[node name="Square0,1" type="TextureButton" parent="Grid3x3"]
+margin_left = -16.0
+margin_top = -61.0
+margin_right = 16.0
+margin_bottom = -29.0
+focus_neighbour_left = NodePath("../Square0,0")
+focus_neighbour_top = NodePath("../Square2,1")
+focus_neighbour_right = NodePath("../Square0,2")
+focus_neighbour_bottom = NodePath("../Square1,1")
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+row = 0
+col = 1
+
+[node name="Square0,2" type="TextureButton" parent="Grid3x3"]
+margin_left = 29.0
+margin_top = -61.0
+margin_right = 61.0
+margin_bottom = -29.0
+focus_neighbour_left = NodePath("../Square0,1")
+focus_neighbour_top = NodePath("../Square2,2")
+focus_neighbour_right = NodePath("../Square0,0")
+focus_neighbour_bottom = NodePath("../Square1,2")
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+row = 0
+col = 2
+
+[node name="Square1,0" type="TextureButton" parent="Grid3x3"]
+margin_left = -61.0
+margin_top = -16.0
+margin_right = -29.0
+margin_bottom = 16.0
+focus_neighbour_left = NodePath("../Square1,2")
+focus_neighbour_top = NodePath("../Square0,0")
+focus_neighbour_right = NodePath("../Square1,1")
+focus_neighbour_bottom = NodePath("../Square2,0")
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+row = 1
+col = 0
+
+[node name="Square1,1" type="TextureButton" parent="Grid3x3"]
+margin_left = -16.0
+margin_top = -16.0
+margin_right = 16.0
+margin_bottom = 16.0
+focus_neighbour_left = NodePath("../Square1,0")
+focus_neighbour_top = NodePath("../Square0,1")
+focus_neighbour_right = NodePath("../Square1,2")
+focus_neighbour_bottom = NodePath("../Square2,1")
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+row = 1
+col = 1
+startFocused = true
+
+[node name="Square1,2" type="TextureButton" parent="Grid3x3"]
+margin_left = 29.0
+margin_top = -16.0
+margin_right = 61.0
+margin_bottom = 16.0
+focus_neighbour_left = NodePath("../Square1,1")
+focus_neighbour_top = NodePath("../Square0,2")
+focus_neighbour_right = NodePath("../Square1,0")
+focus_neighbour_bottom = NodePath("../Square2,2")
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+row = 1
+col = 2
+
+[node name="Square2,0" type="TextureButton" parent="Grid3x3"]
+margin_left = -61.0
+margin_top = 29.0
+margin_right = -29.0
+margin_bottom = 61.0
+focus_neighbour_left = NodePath("../Square2,2")
+focus_neighbour_top = NodePath("../Square1,0")
+focus_neighbour_right = NodePath("../Square2,1")
+focus_neighbour_bottom = NodePath("../Square0,0")
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+row = 2
+col = 0
+
+[node name="Square2,1" type="TextureButton" parent="Grid3x3"]
+margin_left = -16.0
+margin_top = 29.0
+margin_right = 16.0
+margin_bottom = 61.0
+focus_neighbour_left = NodePath("../Square2,0")
+focus_neighbour_top = NodePath("../Square1,1")
+focus_neighbour_right = NodePath("../Square2,2")
+focus_neighbour_bottom = NodePath("../Square0,1")
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+row = 2
+col = 1
+
+[node name="Square2,2" type="TextureButton" parent="Grid3x3"]
+margin_left = 29.0
+margin_top = 29.0
+margin_right = 61.0
+margin_bottom = 61.0
+focus_neighbour_left = NodePath("../Square2,1")
+focus_neighbour_top = NodePath("../Square1,2")
+focus_neighbour_right = NodePath("../Square2,0")
+focus_neighbour_bottom = NodePath("../Square0,2")
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+row = 2
+col = 2
+
+[node name="AIDelay" type="Timer" parent="Grid3x3"]
+pause_mode = 2
+
+[node name="Queen" type="Sprite" parent="."]
+position = Vector2( 72, 112 )
+z_index = 5
+texture = ExtResource( 3 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
+stream = ExtResource( 6 )
+volume_db = -5.0
+script = ExtResource( 7 )
+
+[node name="PlayerTimer" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -20.0
+margin_top = 200.0
+margin_right = 124.0
+margin_bottom = 247.0
+custom_fonts/font = ExtResource( 8 )
+text = "Prisoner - time"
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+isQueen = false
+time = 10
+endScenePath = PoolStringArray( "res://Assets/Scenes/EndCrosses.tscn", "res://Assets/Scenes/EndNought.tscn" )
+
+[node name="Timer" type="Timer" parent="PlayerTimer"]
+pause_mode = 1
+
+[node name="QueenTimer" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -20.0
+margin_top = 25.0
+margin_right = 96.0
+margin_bottom = 72.0
+custom_fonts/font = ExtResource( 8 )
+text = "Queen - time
+"
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+time = 10
+endScenePath = PoolStringArray( "res://Assets/Scenes/EndCrosses.tscn", "res://Assets/Scenes/EndNought.tscn" )
+
+[node name="Timer" type="Timer" parent="QueenTimer"]
+pause_mode = 1
+
+[node name="AIStatus" type="Label" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -14.0
+margin_right = 40.0
+custom_fonts/font = ExtResource( 10 )
+text = "Random AI"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="Grid3x3/Square0,0" to="Grid3x3/Square0,0" method="_on_Square_pressed"]
+[connection signal="pressed" from="Grid3x3/Square0,1" to="Grid3x3/Square0,1" method="_on_Square_pressed"]
+[connection signal="pressed" from="Grid3x3/Square0,2" to="Grid3x3/Square0,2" method="_on_Square_pressed"]
+[connection signal="pressed" from="Grid3x3/Square1,0" to="Grid3x3/Square1,0" method="_on_Square_pressed"]
+[connection signal="pressed" from="Grid3x3/Square1,1" to="Grid3x3/Square1,1" method="_on_Square_pressed"]
+[connection signal="pressed" from="Grid3x3/Square1,2" to="Grid3x3/Square1,2" method="_on_Square_pressed"]
+[connection signal="pressed" from="Grid3x3/Square2,0" to="Grid3x3/Square2,0" method="_on_Square_pressed"]
+[connection signal="pressed" from="Grid3x3/Square2,1" to="Grid3x3/Square2,1" method="_on_Square_pressed"]
+[connection signal="pressed" from="Grid3x3/Square2,2" to="Grid3x3/Square2,2" method="_on_Square_pressed"]
+[connection signal="timeout" from="Grid3x3/AIDelay" to="Grid3x3" method="_on_AI_Turn"]
+[connection signal="timeout" from="PlayerTimer/Timer" to="PlayerTimer" method="_on_PlayerTimer_timeout"]
+[connection signal="timeout" from="QueenTimer/Timer" to="QueenTimer" method="_on_PlayerTimer_timeout"]

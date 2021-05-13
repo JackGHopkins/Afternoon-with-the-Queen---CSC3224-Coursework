@@ -1,0 +1,85 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Assets/UIElements/Title.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/UIElements/ChangeSceneButton.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/UIElements/ExitButton.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/Script/EndScene.cs" type="Script" id=4]
+[ext_resource path="res://Assets/Fonts/Minecraftia-Regular.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://Assets/Sprites/Queen Faces/Guard_Draw.png" type="Texture" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+size = 8
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 8
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 8
+font_data = ExtResource( 5 )
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PauseOverlay" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.52549 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Draw" parent="PauseOverlay" instance=ExtResource( 1 )]
+margin_bottom = 9.0
+custom_fonts/font = SubResource( 1 )
+text = "We drew huh? Well, lets play again. 
+You need to beat me of you want a chance with her Maj."
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseOverlay"]
+pause_mode = 2
+process_priority = 1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -30.5
+margin_top = 10.0
+margin_right = 30.5
+margin_bottom = 69.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Start" parent="PauseOverlay/VBoxContainer" instance=ExtResource( 2 )]
+margin_right = 61.0
+margin_bottom = 17.0
+custom_fonts/font = SubResource( 2 )
+text = "Play Again"
+nextScenePath = "res://Assets/Scenes/GuardFight.tscn"
+
+[node name="MainMenu" parent="PauseOverlay/VBoxContainer" instance=ExtResource( 2 )]
+margin_top = 21.0
+margin_right = 61.0
+margin_bottom = 38.0
+custom_fonts/font = SubResource( 2 )
+text = "Main Menu"
+nextScenePath = "res://Assets/Scenes/TitleScreen.tscn"
+
+[node name="Exit" parent="PauseOverlay/VBoxContainer" instance=ExtResource( 3 )]
+margin_top = 42.0
+margin_right = 61.0
+margin_bottom = 59.0
+custom_fonts/font = SubResource( 3 )
+
+[node name="FaceDistain" type="Sprite" parent="PauseOverlay"]
+position = Vector2( 160, 50 )
+texture = ExtResource( 6 )
+__meta__ = {
+"_editor_description_": ""
+}

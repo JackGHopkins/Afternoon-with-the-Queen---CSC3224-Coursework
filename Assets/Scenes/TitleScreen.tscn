@@ -43,7 +43,7 @@ __meta__ = {
 [node name="Start" parent="VBoxContainer" instance=ExtResource( 4 )]
 margin_right = 94.0
 margin_bottom = 27.0
-nextScenePath = "res://Assets/Scenes/Introduction.tscn"
+nextScenePath = "res://Assets/Scenes/GuardDialogue.tscn"
 
 [node name="Exit" parent="VBoxContainer" instance=ExtResource( 3 )]
 margin_top = 31.0

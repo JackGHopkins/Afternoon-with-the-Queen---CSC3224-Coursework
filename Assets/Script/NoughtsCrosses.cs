@@ -64,7 +64,7 @@ public class NoughtsCrosses : Sprite
 
         // Connecting AI Options to script
         optionsMenu = GetNode<Control>(optionsMenuPath);
-        optionsMenu.Connect("AIDifficulty", this, "HandleAIDifficulty");
+        //optionsMenu.Connect("AIDifficulty", this, "HandleAIDifficulty");
 
         // Setting up AI Status indicator
         aiStatus = GetNode<Label>(aiPath);
