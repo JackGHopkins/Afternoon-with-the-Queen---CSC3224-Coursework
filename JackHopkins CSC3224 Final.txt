@@ -1,0 +1,3 @@
+Itch.io Link: https://jackghopkins.itch.io/an-afternoon-with-the-queen
+Main Repo: https://github.com/JackGHopkins/Afternoon-with-the-Queen---CSC3224-Coursework
+Export File Repo: https://github.com/JackGHopkins/CSC3224-Export-Project

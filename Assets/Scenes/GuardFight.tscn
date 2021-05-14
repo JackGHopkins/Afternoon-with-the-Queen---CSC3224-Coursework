@@ -201,7 +201,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 isQueen = false
-endScenePath = PoolStringArray( "res://Assets/Scenes/EndCrosses.tscn", "res://Assets/Scenes/EndNought.tscn" )
+endScenePath = PoolStringArray( "res://Assets/Scenes/WinScenes/GuardLose.tscn", "res://Assets/Scenes/WinScenes/GuardWin.tscn" )
 
 [node name="Timer" type="Timer" parent="PlayerTimer"]
 pause_mode = 1
