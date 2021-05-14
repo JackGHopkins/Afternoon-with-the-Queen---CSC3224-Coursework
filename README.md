@@ -17,6 +17,7 @@ Play here: https://jackghopkins.itch.io/an-afternoon-with-the-queen
 
 ## Credits:
 Emilio's Dialogic Plugin: https://github.com/coppolaemilio/dialogic/releases/tag/1.1
+
 Music 8-bit: https://www.youtube.com/user/tekket101
 
 
