@@ -13,50 +13,10 @@ And so, you are put up against the queen to play a bizzare version of Noughts an
 
 Only time will tell...
 
-# To Do list
+Play here: https://jackghopkins.itch.io/an-afternoon-with-the-queen
 
-## Coursework 1 | March 1st 2021 |
-> This first piece of coursework provides an opportunity for you to develop a prototype of your game. A prototype is not a full implementation of a game but should allow a player to:
-> 1) Play a small or restricted element of a game.
-> 2) Understand the genre of a game.
-> 3) Realise the gameplay expectations.
-> 4) Achieve some limited goals within a game.
-> 5) Run the game from a web page (link must be provided).
-> 6) Provide developer help (like cheats to allow greater testing).
-
-## Game Design (10 Marks)
-**Possible Interaction** - If Player can influence the enviroment (3 Marks):
-- [X] Place Tokens
-- [X] AI / Queen reacts to placement of Token.
-- [X] The Speed at which the Queen places the Token varies
-
-**Genre Clarity** - If its clear what the Player has to do after a little experimenting (3 Marks):
-- [X] Make it clear its a game of Noughts and Crosses.
-
-**Goals** - What the Player can achieve (2 marks):
-- [X] Player can win the Game
-
-**Ease of Play** - How intuative is it to play? (2 marks):
-- [X] Make Graphics clear.
-
-## Technical Design (10 Marks)
-**Control Management** - Player can impact enviroment as expected (3 Marks):
-- [X] Placing Token in correct places.
-- [ ] No dead spaces on Buttons.
-
-**Event Handling** - Enviroment reacto to player's interactions as expected (3 Marks):
-- [X] Result of the Game is called correctly.
-
-**Enviroment Automation** Game plays even without player doing anything (4 Marks):
-- [ ] Implement Time limit for each opponent (Like that of Chess).
-- [ ] Faster you place Token the more time is returned to you.
-
-## Developer's Tools (5 Marks)
-- [ ] Undo Turn button.
-- [ ] Reset button.
-- [ ] Infinite Time Option.
+## Credits:
+Emilio's Dialogic Plugin: https://github.com/coppolaemilio/dialogic/releases/tag/1.1
+Music 8-bit: https://www.youtube.com/user/tekket101
 
 
-# Reminder for next time:
-- Need to add timers
-- Make it all controled by keys
