@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/I Vow to Thee My Country.ogg-dbf03f7b5e5d2ea7b6da66b5584a5213.oggstr"
+
+[deps]
+
+source_file="res://Assets/Music/I Vow to Thee My Country.ogg"
+dest_files=[ "res://.import/I Vow to Thee My Country.ogg-dbf03f7b5e5d2ea7b6da66b5584a5213.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

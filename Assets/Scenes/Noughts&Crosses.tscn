@@ -5,7 +5,7 @@
 [ext_resource path="res://Assets/Sprites/Queen.png" type="Texture" id=3]
 [ext_resource path="res://Assets/Sprites/Grid3x3.png" type="Texture" id=4]
 [ext_resource path="res://Assets/Scenes/PauseScreen.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Assets/Music/British Grenadiers Chiptune Cover.wav" type="AudioStream" id=6]
+[ext_resource path="res://Assets/Music/God Save The Queen (UK National Anthem) [8 Bit Tribute to The United Kingdom] - 8 Bit Universe.ogg" type="AudioStream" id=6]
 [ext_resource path="res://Assets/Script/Music.cs" type="Script" id=7]
 [ext_resource path="res://Assets/Fonts/Minecraftia.tres" type="DynamicFont" id=8]
 [ext_resource path="res://Assets/Script/PlayerTimer.cs" type="Script" id=9]
@@ -23,6 +23,7 @@ z_index = 1
 texture = ExtResource( 4 )
 script = ExtResource( 1 )
 endScenePath = PoolStringArray( "res://Assets/Scenes/WinScenes/QueenLose.tscn", "res://Assets/Scenes/WinScenes/QueenWin.tscn", "res://Assets/Scenes/WinScenes/QueenDraw.tscn" )
+bestAI = true
 optionsMenuPath = NodePath("../PauseScene/PauseScene")
 aiPath = NodePath("../AIStatus")
 timerQueenPath = NodePath("../PlayerTimer")
@@ -184,7 +185,7 @@ texture = ExtResource( 3 )
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 pause_mode = 2
 stream = ExtResource( 6 )
-volume_db = -5.0
+volume_db = -15.0
 script = ExtResource( 7 )
 
 [node name="PlayerTimer" type="Label" parent="."]
@@ -201,7 +202,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 isQueen = false
-time = 10
+time = 30
 endScenePath = PoolStringArray( "res://Assets/Scenes/EndCrosses.tscn", "res://Assets/Scenes/EndNought.tscn" )
 
 [node name="Timer" type="Timer" parent="PlayerTimer"]
@@ -221,7 +222,7 @@ script = ExtResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-time = 10
+time = 30
 endScenePath = PoolStringArray( "res://Assets/Scenes/EndCrosses.tscn", "res://Assets/Scenes/EndNought.tscn" )
 
 [node name="Timer" type="Timer" parent="QueenTimer"]
@@ -233,7 +234,7 @@ anchor_bottom = 1.0
 margin_top = -14.0
 margin_right = 40.0
 custom_fonts/font = ExtResource( 10 )
-text = "Random AI"
+text = "Unbeatable AI"
 __meta__ = {
 "_edit_use_anchors_": false
 }

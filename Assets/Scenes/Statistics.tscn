@@ -1,0 +1,34 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Assets/Script/Autoload.cs" type="Script" id=1]
+[ext_resource path="res://Assets/Fonts/MinecraftiaSmall.tres" type="DynamicFont" id=2]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="PlayerTimer" type="Label" parent="."]
+margin_top = 0.629959
+margin_right = 166.0
+margin_bottom = 47.63
+rect_pivot_offset = Vector2( -200.775, 122.698 )
+custom_fonts/font = ExtResource( 2 )
+text = "time"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FPS counter" type="Label" parent="."]
+anchor_bottom = 0.065
+margin_left = 0.629959
+margin_top = 25.4208
+margin_right = 166.63
+margin_bottom = 72.4208
+rect_pivot_offset = Vector2( -200.775, 122.698 )
+custom_fonts/font = ExtResource( 2 )
+text = "FPS:"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+isTime = false
+isFPS = true

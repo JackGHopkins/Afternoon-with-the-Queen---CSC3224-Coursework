@@ -30,14 +30,19 @@ __meta__ = {
 [node name="PauseOverlay" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = -0.629974
+margin_right = -0.629974
 color = Color( 0, 0, 0, 0.52549 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Noughts Wins" parent="PauseOverlay" instance=ExtResource( 1 )]
 margin_top = -37.0
 margin_bottom = -12.0
 custom_fonts/font = SubResource( 1 )
 text = "I won? Oh how splendid!
-What a delightful game."
+Do you want another game?"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PauseOverlay"]
 pause_mode = 2
@@ -45,21 +50,33 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -7.0
-margin_right = 20.0
-margin_bottom = 33.0
+margin_left = -35.0
+margin_top = 7.62939e-06
+margin_right = 35.0
+margin_bottom = 40.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Start" parent="PauseOverlay/VBoxContainer" instance=ExtResource( 2 )]
+margin_right = 70.0
+margin_bottom = 17.0
 custom_fonts/font = SubResource( 2 )
+text = "Fight Again?"
 nextScenePath = "res://Assets/Scenes/Noughts&Crosses.tscn"
 
+[node name="MainMenu" parent="PauseOverlay/VBoxContainer" instance=ExtResource( 2 )]
+margin_top = 21.0
+margin_right = 70.0
+margin_bottom = 38.0
+custom_fonts/font = SubResource( 2 )
+text = "Main Menu"
+nextScenePath = "res://Assets/Scenes/TitleScreen.tscn"
+
 [node name="Exit" parent="PauseOverlay/VBoxContainer" instance=ExtResource( 3 )]
-margin_top = 22.0
-margin_bottom = 40.0
+margin_top = 42.0
+margin_right = 70.0
+margin_bottom = 59.0
 custom_fonts/font = SubResource( 3 )
 
 [node name="FacePleased" type="Sprite" parent="."]

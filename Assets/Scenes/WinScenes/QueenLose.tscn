@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Assets/UIElements/Title.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/UIElements/ChangeSceneButton.tscn" type="PackedScene" id=2]
@@ -6,8 +6,10 @@
 [ext_resource path="res://Assets/Script/EndScene.cs" type="Script" id=4]
 [ext_resource path="res://Assets/Fonts/Minecraftia-Regular.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://Assets/Sprites/Queen Faces/FaceSad.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Script/ChangeSceneButton.cs" type="Script" id=7]
+[ext_resource path="res://Assets/Script/ExitButton.cs" type="Script" id=8]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=4]
 size = 8
 font_data = ExtResource( 5 )
 
@@ -35,33 +37,68 @@ color = Color( 0, 0, 0, 0.52549 )
 [node name="Crosses Wins" parent="PauseOverlay" instance=ExtResource( 1 )]
 margin_top = -36.1601
 margin_bottom = -11.1601
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 4 )
 text = "Oh how dreadful!
 I suppose, I can't always win..."
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PauseOverlay"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="PauseOverlay"]
 pause_mode = 2
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -7.0
-margin_right = 20.0
-margin_bottom = 33.0
+margin_left = -35.0
+margin_top = 7.62939e-06
+margin_right = 35.0
+margin_bottom = 40.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Start" parent="PauseOverlay/VBoxContainer" instance=ExtResource( 2 )]
+[node name="Start" type="Button" parent="PauseOverlay/VBoxContainer2" instance=ExtResource( 2 )]
+margin_right = 70.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 custom_fonts/font = SubResource( 2 )
+text = "Fight Again?"
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 nextScenePath = "res://Assets/Scenes/Noughts&Crosses.tscn"
 
-[node name="Exit" parent="PauseOverlay/VBoxContainer" instance=ExtResource( 3 )]
-margin_top = 22.0
-margin_bottom = 40.0
+[node name="MainMenu" type="Button" parent="PauseOverlay/VBoxContainer2" instance=ExtResource( 2 )]
+margin_top = 21.0
+margin_right = 70.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 2 )
+text = "Main Menu"
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+nextScenePath = "res://Assets/Scenes/TitleScreen.tscn"
+
+[node name="Exit" type="Button" parent="PauseOverlay/VBoxContainer2" instance=ExtResource( 3 )]
+margin_top = 42.0
+margin_right = 70.0
+margin_bottom = 59.0
+rect_min_size = Vector2( 26, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
 custom_fonts/font = SubResource( 3 )
+text = "Exit"
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="FaceSad" type="Sprite" parent="."]
 position = Vector2( 160, 57 )
 texture = ExtResource( 6 )
+[connection signal="pressed" from="PauseOverlay/VBoxContainer2/Start" to="PauseOverlay/VBoxContainer2/Start" method="_on_change_scene_pressed"]
+[connection signal="pressed" from="PauseOverlay/VBoxContainer2/MainMenu" to="PauseOverlay/VBoxContainer2/MainMenu" method="_on_change_scene_pressed"]
+[connection signal="pressed" from="PauseOverlay/VBoxContainer2/Exit" to="PauseOverlay/VBoxContainer2/Exit" method="_on_exit_pressed"]

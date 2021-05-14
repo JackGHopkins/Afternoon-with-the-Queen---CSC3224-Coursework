@@ -17,7 +17,7 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-nextScenePath = "res://Assets/Scenes/Noughts&Crosses.tscn"
+nextScenePath = "res://Assets/Scenes/GuardDialogue.tscn"
 
 [node name="Title" type="Label" parent="."]
 anchor_left = 0.5
@@ -38,18 +38,19 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -146.313
-margin_top = -75.5
+margin_top = -71.701
 margin_right = 146.313
-margin_bottom = 75.5
+margin_bottom = 93.299
 custom_fonts/font = SubResource( 2 )
-text = "You are a prisoner and have been summound by the Queen for a game of Noughts and Crosses
-[a.k.a Tic-Tac-Toe].
+text = "Use the Keyboard to navigate the board and Mouse to navigate the menus.
 
-If you win, you may gain your freedom.
+By default you are playing Easy Mode. Check Dev Tools (Pause Screen) for more options. (Press 1,2,3 to change options.)
 
-Use the Keyboard to navigate the board and Mouse to navigate the menus.
+Press \"K\" for Statisitcs.
 
-By default you are playing Easy Mode. Check Dev Tools (Pause Screen) for more options."
+Press \"M\" to toggle Mute for sound.
+
+"
 align = 1
 autowrap = true
 __meta__ = {
